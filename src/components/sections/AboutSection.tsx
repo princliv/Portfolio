@@ -208,8 +208,8 @@ export const AboutSection = memo(function AboutSection() {
         >
           {[
             { value: '1+', label: 'Years Professional Experience' },
-            { value: '50+', label: 'Projects & Deployments' },
-            { value: '6+', label: 'Certifications Earned' },
+            { value: '10+', label: 'Projects & Deployments' },
+            { value: '40+', label: 'Certifications Earned' },
             { value: '3+', label: 'Major Awards & Recognitions' },
           ].map((stat, i) => (
             <div

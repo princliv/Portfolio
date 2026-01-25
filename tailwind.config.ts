@@ -154,6 +154,15 @@ export default {
       backgroundSize: {
         "300%": "300%",
       },
+      // tailwind.config.js
+      theme: {
+        extend: {
+          spacing: {
+            '40': '10rem',
+          },
+        },
+      }
+
     },
   },
   plugins: [require("tailwindcss-animate")],

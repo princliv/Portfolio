@@ -75,11 +75,11 @@ const SKILLS = [
     title: 'Soft Skills',
     subtitle: 'Human Strengths',
     items: [
-      { name: 'Problem Solving', icon: 'https://cdn.svgporn.com/logos/leetcode.svg' },
-      { name: 'Analytical Thinking', icon: 'https://cdn.svgporn.com/logos/python.svg' },
+      { name: 'Problem Solving', icon: 'https://cdn.svgporn.com/logos/slack-icon.svg' },
+      { name: 'Analytical Thinking', icon: 'https://cdn.svgporn.com/logos/slack-icon.svg' },
       { name: 'Communication', icon: 'https://cdn.svgporn.com/logos/slack-icon.svg' },
-      { name: 'Team Collaboration', icon: 'https://cdn.svgporn.com/logos/github-icon.svg' },
-      { name: 'Adaptability', icon: 'https://cdn.svgporn.com/logos/react.svg' },
+      { name: 'Team Collaboration', icon: 'https://cdn.svgporn.com/logos/slack-icon.svg' },
+      { name: 'Adaptability', icon: 'https://cdn.svgporn.com/logos/slack-icon.svg' },
     ],
   },
 ];

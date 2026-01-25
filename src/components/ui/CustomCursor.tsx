@@ -64,7 +64,7 @@ export function CustomCursor() {
       />
       {/* Outer ring */}
       <motion.div
-        className="cursor-ring"
+        className={`cursor-ring ${isHovering ? 'border-primary' : 'border-primary/50'}`}
         style={{
           left: cursorX,
           top: cursorY,
@@ -73,7 +73,6 @@ export function CustomCursor() {
         }}
         animate={{
           scale: isHovering ? 1.5 : 1,
-          borderColor: isHovering ? 'hsl(var(--primary))' : 'hsl(var(--primary) / 0.5)',
         }}
         transition={{ duration: 0.2 }}
       />

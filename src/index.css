@@ -271,7 +271,12 @@
   }
   
   .cursor-ring {
-    @apply fixed w-10 h-10 rounded-full border-2 border-primary/50 pointer-events-none z-[9999];
+    @apply fixed w-10 h-10 rounded-full border-2 pointer-events-none z-[9999];
+    border-color: hsl(var(--primary) / 0.5);
+  }
+  
+  .cursor-ring.border-primary {
+    border-color: hsl(var(--primary));
   }
   
   /* Animated Border */
