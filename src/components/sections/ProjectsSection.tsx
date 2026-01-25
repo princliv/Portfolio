@@ -2,23 +2,25 @@ import { memo, useRef, useState } from 'react'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Github, ExternalLink } from 'lucide-react'
+import udyampath from '../../../public/assets/about-marquee/1.png'
+import mentora from '../../../public/assets/about-marquee/13.png'
 
 const featuredProjects = [
   {
     id: 1,
-    title: 'AI Dashboard',
-    description: 'Real-time analytics platform with machine learning predictions and interactive visualizations.',
-    tags: ['React', 'TensorFlow', 'Node.js', 'PostgreSQL'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&fit=crop',
-    github: 'https://github.com',
+    title: 'UdyamPath',
+    description: 'A platform for startups to get funding and support from the government.',
+    tags: ['React', 'Firebase', 'GitHub', 'JSON', 'Canva'],
+    image: udyampath,
+    github: 'https://github.com/princliv/UdyAmPath',
     live: 'https://example.com',
   },
   {
     id: 2,
-    title: 'E-Commerce Platform',
-    description: 'Full-stack marketplace with payment processing, inventory management, and real-time notifications.',
-    tags: ['Next.js', 'Stripe', 'Prisma', 'Redis'],
-    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&fit=crop',
+    title: 'Mentora',
+    description: 'A mobile and web app designed to promote mental well-being and productivity with 4 core features.',
+    tags: ['React', 'Firebase', 'GitHub', 'Netlify'],
+    image: mentora,
     github: 'https://github.com',
     live: 'https://example.com',
   },

@@ -43,7 +43,7 @@ export function TechMarquee() {
           style={{
             height: '350px', // increased height
             willChange: 'transform',
-            animationDuration: '18s',
+            animationDuration: '36s',
           }}
         >
           {marqueeImages.map((src, i) => (

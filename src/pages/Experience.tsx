@@ -1,63 +1,106 @@
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { Briefcase, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { Briefcase, Calendar, MapPin } from 'lucide-react';
 
 const experiences = [
   {
     id: 1,
-    role: 'Senior Full-Stack Developer',
-    company: 'Tech Innovators Inc.',
-    location: 'San Francisco, CA',
-    period: '2022 - Present',
-    description: 'Leading development of enterprise-scale applications using React, Node.js, and AWS. Managing a team of 5 developers and architecting solutions for Fortune 500 clients.',
-    technologies: ['React', 'Node.js', 'TypeScript', 'AWS', 'PostgreSQL', 'GraphQL'],
+    role: 'Software Developer',
+    company: 'Creditor Academy',
+    location: 'Roorkee, India',
+    period: 'May 2025 - Present',
+    description:
+      'Developing and optimizing modern frontend interfaces with a strong focus on clean UI, responsiveness, and user engagement.',
+    technologies: [
+      'Next.js',
+      'ReactJS',
+      'Node.js',
+      'REST APIs',
+      'AWS',
+      'Figma',
+      'Canva',
+      'Hostinger',
+      'Jira',
+      'Vercel',
+      'Netlify',
+      'Git',
+      'GitHub',
+      'Clarity Analytics',
+      'Google Search Console',
+      'Google Analytics',
+    ],
     highlights: [
-      'Reduced application load time by 40% through performance optimization',
-      'Led migration of legacy systems to modern microservices architecture',
-      'Implemented CI/CD pipelines reducing deployment time by 60%',
+      'Built and integrated REST APIs for seamless frontend–backend data flow',
+      'Implemented gamification features to boost user engagement',
+      'Designed responsive and visually consistent user interfaces',
     ],
   },
   {
     id: 2,
-    role: 'Full-Stack Developer',
-    company: 'Digital Solutions Co.',
-    location: 'New York, NY',
-    period: '2020 - 2022',
-    description: 'Developed and maintained multiple web applications for diverse clients across fintech, healthcare, and e-commerce industries.',
-    technologies: ['React', 'Python', 'Django', 'MongoDB', 'Docker', 'Redis'],
+    role: 'Android Developer Intern',
+    company: 'EduSkills (AICTE NEAT | Google for Developers)',
+    location: 'Remote',
+    period: 'Apr 2024 - Jun 2024',
+    description:
+      'Completed a 10-week virtual internship focused on advanced Android application development with hands-on projects.',
+    technologies: ['Android Studio', 'Kotlin', 'Java', 'Firebase'],
     highlights: [
-      'Built real-time trading platform handling 10,000+ concurrent users',
-      'Developed HIPAA-compliant healthcare data management system',
-      'Mentored junior developers and conducted code reviews',
+      'Designed and built efficient Android applications',
+      'Strengthened expertise in Java and Kotlin',
+      'Achieved an "Excellent" grade for outstanding performance',
     ],
   },
   {
     id: 3,
-    role: 'Frontend Developer',
-    company: 'Creative Agency',
-    location: 'Los Angeles, CA',
-    period: '2019 - 2020',
-    description: 'Created responsive, accessible web experiences for brands and startups. Focused on animation, interactivity, and performance.',
-    technologies: ['React', 'Vue.js', 'GSAP', 'Three.js', 'Sass', 'Webpack'],
+    role: 'Software Development Engineer Intern',
+    company: 'Uma Robotics PVT Ltd.',
+    location: 'Haridwar, India',
+    period: 'Jan 2024 - Apr 2024',
+    description:
+      'Worked on software and web development for mobile robots, focusing on application enhancement and rigorous testing.',
+    technologies: [
+      'React Native',
+      'NodeJS',
+      'MongoDB',
+      'Python',
+      'Figma',
+      'Canva',
+    ],
     highlights: [
-      'Designed and developed award-winning interactive websites',
-      'Improved accessibility scores from 60% to 98% across all projects',
-      'Established component library used across 15+ projects',
+      'Enhanced mobile app for monitoring robotic systems',
+      'Ensured application stability through extensive testing',
+      'Highly recommended by the organization for future roles',
     ],
   },
   {
     id: 4,
-    role: 'Junior Developer',
-    company: 'StartUp Hub',
+    role: 'Android Developer Intern',
+    company: 'Bharat Intern',
     location: 'Remote',
-    period: '2018 - 2019',
-    description: 'Started career building MVPs for early-stage startups. Learned agile methodologies and rapid prototyping.',
-    technologies: ['JavaScript', 'React', 'Node.js', 'Firebase', 'CSS'],
+    period: 'Aug 2023 - Sept 2023',
+    description:
+      'Developed real-world Android applications while collaborating with industry professionals.',
+    technologies: ['Android Studio', 'Java', 'Kotlin', 'Firebase'],
     highlights: [
-      'Shipped 8 MVPs in 12 months',
-      'Gained expertise in rapid prototyping and user testing',
-      'Contributed to open-source projects',
+      'Built a temperature unit converter application',
+      'Developed an interactive quiz application',
+      'Gained hands-on experience in real-world app development',
+    ],
+  },
+  {
+    id: 5,
+    role: 'Cybersecurity Intern',
+    company: 'IBM SkillsBuild (AICTE & Edunet Foundation)',
+    location: 'Remote',
+    period: 'Jun 2023 - Jul 2023',
+    description:
+      'Completed an intensive cybersecurity internship focused on practical security concepts and automation.',
+    technologies: ['Python', 'SQL', 'Tkinter', 'Pillow'],
+    highlights: [
+      'Trained in core cybersecurity concepts and tools',
+      'Automated cybersecurity tasks using Python',
+      'Prepared to handle real-world digital security challenges',
     ],
   },
 ];
@@ -78,86 +121,108 @@ const Experience = () => {
       <section className="pb-24">
         <div className="container-custom">
           <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px" />
+            {/* Center Timeline Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
 
-            {experiences.map((exp, i) => (
-              <motion.div
-                key={exp.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className={`relative mb-12 md:mb-16 ${
-                  i % 2 === 0 ? 'md:pr-[50%] md:text-right' : 'md:pl-[50%] md:ml-auto'
-                }`}
-              >
-                {/* Timeline Dot */}
+            {experiences.map((exp, i) => {
+              const isLeft = i % 2 === 0;
+
+              return (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                  className={`absolute top-0 w-4 h-4 rounded-full bg-primary border-4 border-background z-10 ${
-                    i % 2 === 0 ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-0 md:left-1/2 md:-translate-x-1/2'
-                  }`}
-                />
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.6, delay: i * 0.08 }}
+                  className="relative mb-16"
+                >
+                  {/* Timeline Dot (perfectly centered on line) */}
+                  <span className="absolute left-4 md:left-1/2 top-6 -translate-x-1/2 z-10">
+                    <span className="block w-4 h-4 rounded-full bg-primary border-4 border-background" />
+                  </span>
 
-                {/* Content Card */}
-                <div className={`ml-8 md:ml-0 ${i % 2 === 0 ? 'md:mr-12' : 'md:ml-12'}`}>
-                  <div className="card-premium animated-border">
-                    {/* Header */}
-                    <div className={`flex flex-wrap items-start gap-4 mb-4 ${i % 2 === 0 ? 'md:justify-end' : ''}`}>
-                      <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                        <Briefcase className="w-6 h-6" />
+                  {/* Card Wrapper */}
+                  <div
+                    className={`ml-12 md:ml-0 md:w-1/2 ${
+                      isLeft
+                        ? 'md:pr-12 md:mr-auto md:text-left'
+                        : 'md:pl-12 md:ml-auto'
+                    }`}
+                  >
+                    <div className="card-premium animated-border">
+                      {/* Header */}
+                      <div
+                        className={`flex items-start gap-4 mb-4 ${
+                          isLeft ? 'md:justify-start' : ''
+                        }`}
+                      >
+                        <div className="p-3 rounded-xl bg-primary/10 text-primary shrink-0">
+                          <Briefcase className="w-6 h-6" />
+                        </div>
+                        <div className={isLeft ? 'md:text-left' : ''}>
+                          <h3 className="heading-4 text-xl">{exp.role}</h3>
+                          <p className="text-primary font-medium">{exp.company}</p>
+                        </div>
                       </div>
-                      <div className={i % 2 === 0 ? 'md:text-right' : ''}>
-                        <h3 className="heading-4 text-xl">{exp.role}</h3>
-                        <p className="text-primary font-medium">{exp.company}</p>
-                      </div>
-                    </div>
 
-                    {/* Meta */}
-                    <div className={`flex flex-wrap gap-4 text-sm text-muted-foreground mb-4 ${i % 2 === 0 ? 'md:justify-end' : ''}`}>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {exp.period}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4" />
-                        {exp.location}
-                      </span>
-                    </div>
-
-                    {/* Description */}
-                    <p className={`text-muted-foreground mb-4 ${i % 2 === 0 ? 'md:text-right' : ''}`}>
-                      {exp.description}
-                    </p>
-
-                    {/* Highlights */}
-                    <ul className={`space-y-2 mb-4 ${i % 2 === 0 ? 'md:text-right' : ''}`}>
-                      {exp.highlights.map((highlight, hi) => (
-                        <li key={hi} className="text-sm text-foreground">
-                          • {highlight}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Technologies */}
-                    <div className={`flex flex-wrap gap-2 ${i % 2 === 0 ? 'md:justify-end' : ''}`}>
-                      {exp.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 text-xs font-medium rounded-full bg-secondary text-secondary-foreground"
-                        >
-                          {tech}
+                      {/* Meta */}
+                      <div
+                        className={`flex flex-wrap gap-4 text-sm text-muted-foreground mb-4 ${
+                          isLeft ? 'md:justify-start' : ''
+                        }`}
+                      >
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          {exp.period}
                         </span>
-                      ))}
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-4 h-4" />
+                          {exp.location}
+                        </span>
+                      </div>
+
+                      {/* Description */}
+                      <p
+                        className={`text-muted-foreground mb-4 ${
+                          isLeft ? 'md:text-left' : ''
+                        }`}
+                      >
+                        {exp.description}
+                      </p>
+
+                      {/* Highlights */}
+                      <ul
+                        className={`space-y-2 mb-4 ${
+                          isLeft ? 'md:text-left' : ''
+                        }`}
+                      >
+                        {exp.highlights.map((h, hi) => (
+                          <li key={hi} className="text-sm">
+                            • {h}
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Technologies */}
+                      <div
+                        className={`flex flex-wrap gap-2 ${
+                          isLeft ? 'md:justify-start' : ''
+                        }`}
+                      >
+                        {exp.technologies.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 text-xs font-medium rounded-full bg-secondary text-secondary-foreground"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
