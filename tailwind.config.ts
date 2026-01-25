@@ -132,6 +132,69 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "shooting-star": {
+          "0%": { 
+            transform: "translate(0, 0) scale(0)",
+            opacity: "0"
+          },
+          "10%": {
+            opacity: "1",
+            transform: "translate(0, 0) scale(1)"
+          },
+          "100%": {
+            transform: "translate(-200px, 200px) scale(0)",
+            opacity: "0"
+          },
+        },
+        "cosmic-float": {
+          "0%, 100%": { transform: "translateY(0) translateX(0)" },
+          "33%": { transform: "translateY(-20px) translateX(10px)" },
+          "66%": { transform: "translateY(10px) translateX(-10px)" },
+        },
+        "nebula-pulse": {
+          "0%, 100%": { 
+            opacity: "0.3",
+            transform: "scale(1)"
+          },
+          "50%": { 
+            opacity: "0.6",
+            transform: "scale(1.1)"
+          },
+        },
+        "constellation-twinkle": {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "1" },
+        },
+        "cosmic-glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 60px -12px hsla(192, 91%, 50%, 0.4)",
+            filter: "blur(0px)"
+          },
+          "50%": { 
+            boxShadow: "0 0 100px -8px hsla(192, 91%, 50%, 0.7)",
+            filter: "blur(2px)"
+          },
+        },
+        "slide-up-reveal": {
+          "0%": { 
+            opacity: "0",
+            transform: "translateY(60px) scale(0.95)"
+          },
+          "100%": { 
+            opacity: "1",
+            transform: "translateY(0) scale(1)"
+          },
+        },
+        "scale-fade-in": {
+          "0%": { 
+            opacity: "0",
+            transform: "scale(0.8)"
+          },
+          "100%": { 
+            opacity: "1",
+            transform: "scale(1)"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -150,6 +213,13 @@ export default {
         "line-grow": "line-grow 0.6s ease-out forwards",
         "blur-in": "blur-in 0.8s ease-out forwards",
         "marquee": "marquee 60s linear infinite",
+        "shooting-star": "shooting-star 2s linear infinite",
+        "cosmic-float": "cosmic-float 8s ease-in-out infinite",
+        "nebula-pulse": "nebula-pulse 4s ease-in-out infinite",
+        "constellation-twinkle": "constellation-twinkle 3s ease-in-out infinite",
+        "cosmic-glow": "cosmic-glow 3s ease-in-out infinite",
+        "slide-up-reveal": "slide-up-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "scale-fade-in": "scale-fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
       backgroundSize: {
         "300%": "300%",

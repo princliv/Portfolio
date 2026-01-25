@@ -50,10 +50,15 @@ export const HeroSection = memo(function HeroSection() {
             className="flex flex-col gap-8"
           >
             <h1 className="heading-1 leading-tight">
-              <AnimatedText delay={0.2}>Hi, I’m</AnimatedText>
-              <span className="block gradient-text glow-text">
+              <AnimatedText delay={0.2}>Hi, I'm</AnimatedText>
+              <motion.span 
+                className="block gradient-text glow-text cosmic-text"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
                 Ankit Kumar
-              </span>
+              </motion.span>
             </h1>
 
             <p className="text-2xl md:text-3xl font-display text-muted-foreground max-w-xl">

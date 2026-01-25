@@ -1,6 +1,8 @@
 import { memo } from 'react';
+import { motion } from 'framer-motion';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { TechMarquee } from '@/components/ui/TechMarquee';
+import { useCountUp } from '@/hooks/useCountUp';
 import {
   Code2,
   Layers,
@@ -151,7 +153,11 @@ export const AboutSection = memo(function AboutSection() {
 
         <TechMarquee />
 
-        <div
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
           className="
             grid grid-cols-1
             md:grid-cols-2
@@ -160,8 +166,9 @@ export const AboutSection = memo(function AboutSection() {
           "
         >
           {highlights.map((item) => (
-            <div
+            <motion.div
               key={item.title}
+              variants={itemVariants}
               className="
                 group relative rounded-2xl
                 border border-border/40
@@ -169,8 +176,12 @@ export const AboutSection = memo(function AboutSection() {
                 p-6 shadow-lg
                 hover:shadow-2xl hover:-translate-y-1
                 transition-all duration-300
+                overflow-hidden
               "
             >
+              {/* Cosmic glow effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/10 group-hover:to-primary/5 transition-all duration-500 rounded-2xl" />
+              <div className="relative z-10">
               {/* Header */}
               <div className="flex items-start gap-4 mb-4">
                 <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -189,43 +200,83 @@ export const AboutSection = memo(function AboutSection() {
               {/* Tools */}
               <div className="flex flex-wrap gap-3 mt-5">
                 {item.tools.map((src, i) => (
-                  <img
+                  <motion.img
                     key={i}
                     src={src}
                     alt="tech"
                     loading="lazy"
                     className="w-8 h-8 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    transition={{ duration: 0.2 }}
                   />
                 ))}
               </div>
-            </div>
+              </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Stats */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
-            { value: '1+', label: 'Years Professional Experience' },
-            { value: '10+', label: 'Projects & Deployments' },
-            { value: '40+', label: 'Certifications Earned' },
-            { value: '3+', label: 'Major Awards & Recognitions' },
-          ].map((stat, i) => (
-            <div
-              key={stat.label}
-              className="text-center"
-            >
-              <div className="heading-2 gradient-text mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm text-muted-foreground">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
+            { value: 1, suffix: '+', label: 'Years Professional Experience' },
+            { value: 10, suffix: '+', label: 'Projects & Deployments' },
+            { value: 40, suffix: '+', label: 'Certifications Earned' },
+            { value: 3, suffix: '+', label: 'Major Awards & Recognitions' },
+          ].map((stat, i) => {
+            const { count, ref } = useCountUp({ 
+              end: stat.value, 
+              suffix: stat.suffix,
+              duration: 2000 
+            });
+            
+            return (
+              <motion.div
+                key={stat.label}
+                ref={ref}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: i * 0.1,
+                  ease: [0.22, 1, 0.36, 1] 
+                }}
+                className="text-center group"
+              >
+                <div className="heading-2 gradient-text mb-2 cosmic-text relative inline-block">
+                  {count}
+                  <motion.div
+                    className="absolute -inset-4 bg-primary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [0, 0.3, 0]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
+
+      {/* Cosmic floating orbs */}
+      <div className="absolute top-20 right-10 w-64 h-64 cosmic-orb opacity-30" style={{ animationDelay: '0s' }} />
+      <div className="absolute bottom-20 left-10 w-48 h-48 cosmic-orb opacity-20" style={{ animationDelay: '2s' }} />
     </section>
   );
 });

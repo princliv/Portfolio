@@ -13,6 +13,7 @@ const navLinks = [
   { href: '/experience', label: 'Experience' },
   { href: '/projects', label: 'Projects' },
   { href: '/skills', label: 'Skills' },
+  { href: '/education', label: 'Education' },
   { href: '/achievements', label: 'Achievements' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -46,13 +47,22 @@ export function Navigation() {
 
       {/* Navigation */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-          isScrolled ? 'glass py-4' : 'py-6'
+          isScrolled ? 'glass py-4 shadow-lg' : 'py-6'
         }`}
       >
+        {/* Cosmic glow effect when scrolled */}
+        {isScrolled && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-purple-500/5 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+        )}
         <nav className="container-custom flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative z-50">
@@ -66,15 +76,27 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 relative z-10">
             {navLinks.map((link) => (
-              <Link
+              <motion.div
                 key={link.href}
-                to={link.href}
-                className={`nav-link ${location.pathname === link.href ? 'active text-foreground' : ''}`}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  to={link.href}
+                  className={`nav-link relative ${location.pathname === link.href ? 'active text-foreground' : ''}`}
+                >
+                  {link.label}
+                  {location.pathname === link.href && (
+                    <motion.div
+                      className="absolute inset-0 bg-primary/10 rounded-lg -z-10"
+                      layoutId="activeNav"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              </motion.div>
             ))}
           </div>
 

@@ -90,12 +90,23 @@ export const SkillsSection = memo(function SkillsSection() {
 
   return (
     <section className="relative z-20 py-32 overflow-hidden bg-background">
-      <div className="container-custom">
-        <SectionHeader
-          eyebrow="Expertise"
-          title="What I Work With"
-          description="A living set of skills shaped by real-world projects, systems, and experimentation."
-        />
+      {/* Cosmic background effects */}
+      <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-nebula-pulse" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 rounded-full bg-purple-500/10 blur-3xl animate-nebula-pulse" style={{ animationDelay: '2s' }} />
+      
+      <div className="container-custom relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <SectionHeader
+            eyebrow="Expertise"
+            title="What I Work With"
+            description="A living set of skills shaped by real-world projects, systems, and experimentation."
+          />
+        </motion.div>
 
         <div className="mt-28 space-y-36">
           {SKILLS.map((group, index) => (
@@ -112,12 +123,24 @@ export const SkillsSection = memo(function SkillsSection() {
               className="grid grid-cols-12 gap-6 items-start"
             >
               <div className="col-span-12 lg:col-span-4 sticky top-32">
-                <h3 className="text-5xl md:text-6xl font-semibold leading-none tracking-tight">
+                <motion.h3 
+                  className="text-5xl md:text-6xl font-semibold leading-none tracking-tight cosmic-text"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
                   {group.title}
-                </h3>
-                <p className="mt-4 text-muted-foreground max-w-sm">
+                </motion.h3>
+                <motion.p 
+                  className="mt-4 text-muted-foreground max-w-sm"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
                   {group.subtitle}
-                </p>
+                </motion.p>
               </div>
 
               <div className="col-span-12 lg:col-span-8">
@@ -134,25 +157,33 @@ export const SkillsSection = memo(function SkillsSection() {
                     <motion.li
                       key={item.name}
                       variants={{
-                        hidden: { opacity: 0, y: 20 },
+                        hidden: { opacity: 0, y: 20, scale: 0.9 },
                         visible: {
                           opacity: 1,
                           y: 0,
+                          scale: 1,
                           transition: {
                             duration: 0.6,
                             ease: [0.22, 1, 0.36, 1],
                           },
                         },
                       }}
-                      className="flex items-center gap-3 text-lg md:text-xl font-medium tracking-wide"
+                      whileHover={{ 
+                        scale: 1.05, 
+                        x: 5,
+                        transition: { duration: 0.2 }
+                      }}
+                      className="flex items-center gap-3 text-lg md:text-xl font-medium tracking-wide group/item cursor-default"
                     >
-                      <img
+                      <motion.img
                         src={item.icon}
                         alt={item.name}
-                        className="h-7 w-auto opacity-80"
+                        className="h-7 w-auto opacity-80 group-hover/item:opacity-100 transition-opacity"
                         loading="lazy"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.5 }}
                       />
-                      <span>{item.name}</span>
+                      <span className="group-hover/item:text-primary transition-colors">{item.name}</span>
                     </motion.li>
                   ))}
                 </motion.ul>
