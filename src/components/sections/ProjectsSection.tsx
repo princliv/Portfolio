@@ -46,12 +46,8 @@ export const ProjectsSection = memo(function ProjectsSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {featuredProjects.map((project, i) => (
-            <motion.div
+            <div 
               key={project.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
               className="group relative overflow-hidden rounded-2xl bg-card"
             >
               {/* Project Image */}
@@ -111,7 +107,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

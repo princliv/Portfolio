@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, ArrowUpRight, Instagram } from 'lucide-react';
 import logo from '../../../public/assets/logodark.webp';
+import logoLight from '../../../public/assets/logolight.webp';
+import { useTheme } from '@/hooks/useTheme';
 
 const socialLinks = [
   { icon: Mail, href: 'mailto:ankitkumar1990asap@gmail.com', label: 'Email' },
@@ -10,13 +12,14 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const { resolvedTheme } = useTheme();
   return (
     <footer className="relative z-20 glass py-12 border-t border-border/40">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo & Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
-            <img src={logo} alt="Logo" className="h-10" />
+            <img src={resolvedTheme === 'dark' ? logo : logoLight} alt="Logo" className="h-10" />
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Ankit Kumar. All rights reserved.
             </p>
@@ -41,9 +44,7 @@ export function Footer() {
           </div>
 
           {/* Status */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+          <div
             className="flex items-center gap-2 text-sm"
           >
             <span className="relative flex h-2 w-2">
@@ -57,7 +58,7 @@ export function Footer() {
             >
               Let's talk <ArrowUpRight className="w-3 h-3" />
             </a>
-          </motion.div>
+          </div>
         </div>
       </div>
     </footer>

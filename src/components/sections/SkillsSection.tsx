@@ -1,97 +1,168 @@
 import { memo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-
-const skillCategories = [
+import Cybersecurity from '../../../public/assets/icons/cybersecutrity.webp';
+import Canva from '../../../public/assets/icons/Canva.png';
+import Anaconda from '../../../public/assets/icons/Anaconda.png';
+const SKILLS = [
   {
-    title: 'Frontend',
-    skills: [
-      { name: 'React', level: 95 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'Next.js', level: 88 },
-      { name: 'Tailwind CSS', level: 92 },
+    title: 'Programming',
+    subtitle: 'Languages & Core Logic',
+    items: [
+      { name: 'Python', icon: 'https://cdn.svgporn.com/logos/python.svg' },
+      { name: 'Java', icon: 'https://cdn.svgporn.com/logos/java.svg' },
+      { name: 'C', icon: 'https://cdn.svgporn.com/logos/c.svg' },
+      { name: 'C++', icon: 'https://cdn.svgporn.com/logos/c-plusplus.svg' },
+      { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript' },
+      { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript' },
+      { name: 'MERN', icon: 'https://cdn.svgporn.com/logos/react.svg' },
+    ],
+  },  
+  {
+    title: 'Frameworks',
+    subtitle: 'Libraries & Ecosystem',
+    items: [
+      { name: 'React JS', icon: 'https://cdn.svgporn.com/logos/react.svg' },
+      { name: 'React Native', icon: 'https://cdn.svgporn.com/logos/react.svg' },
+      { name: 'Node.js', icon: 'https://cdn.simpleicons.org/node.js' },
+      { name: 'REST API', icon: 'https://cdn.simpleicons.org/postman' },
+      { name: 'Django', icon: 'https://cdn.svgporn.com/logos/django-icon.svg' },
+      { name: 'NumPy', icon: 'https://cdn.svgporn.com/logos/numpy.svg' },
+      { name: 'Pandas', icon: 'https://cdn.svgporn.com/logos/pandas.svg' },
+      { name: 'Tkinter', icon: 'https://cdn.svgporn.com/logos/python.svg' },
+      { name: 'Jupyter', icon: 'https://cdn.svgporn.com/logos/jupyter.svg' },
     ],
   },
   {
-    title: 'Backend',
-    skills: [
-      { name: 'Node.js', level: 90 },
-      { name: 'Python', level: 85 },
-      { name: 'PostgreSQL', level: 88 },
-      { name: 'GraphQL', level: 82 },
+    title: 'Databases',
+    subtitle: 'Data & Storage',
+    items: [
+      { name: 'SQL', icon: 'https://cdn.svgporn.com/logos/mysql.svg' },
+      { name: 'PostgreSQL', icon: 'https://cdn.svgporn.com/logos/postgresql.svg' },
+      { name: 'MongoDB', icon: 'https://cdn.svgporn.com/logos/mongodb.svg' },
+      { name: 'Firebase', icon: 'https://cdn.svgporn.com/logos/firebase.svg' },
     ],
   },
   {
-    title: 'AI & ML',
-    skills: [
-      { name: 'TensorFlow', level: 80 },
-      { name: 'PyTorch', level: 75 },
-      { name: 'OpenAI', level: 85 },
-      { name: 'LangChain', level: 78 },
+    title: 'Technologies',
+    subtitle: 'Domains & Expertise',
+    items: [
+      { name: 'Web Development', icon: 'https://cdn.svgporn.com/logos/html-5.svg' },
+      { name: 'App Development', icon: 'https://cdn.svgporn.com/logos/android-icon.svg' },
+      { name: 'Cybersecurity', icon: Cybersecurity },
+      { name: 'Machine Learning', icon: 'https://cdn.svgporn.com/logos/tensorflow.svg' },
+      { name: 'Data Analytics', icon: 'https://cdn.svgporn.com/logos/google-analytics.svg' },
+      { name: 'Application Testing', icon: 'https://cdn.svgporn.com/logos/postman.svg' },
     ],
   },
   {
     title: 'Tools',
-    skills: [
-      { name: 'Git', level: 95 },
-      { name: 'Docker', level: 85 },
-      { name: 'AWS', level: 80 },
-      { name: 'Figma', level: 75 },
+    subtitle: 'Workflow & Platforms',
+    items: [
+      { name: 'Git', icon: 'https://cdn.svgporn.com/logos/git-icon.svg' },
+      { name: 'GitHub', icon: 'https://cdn.svgporn.com/logos/github-icon.svg' },
+      { name: 'Android Studio', icon: 'https://cdn.svgporn.com/logos/android-icon.svg' },
+      { name: 'Anaconda', icon: Anaconda },
+      { name: 'Figma', icon: 'https://cdn.svgporn.com/logos/figma.svg' },
+      { name: 'Canva', icon: Canva },
+      { name: 'MS Office', icon: 'https://cdn.svgporn.com/logos/microsoft.svg' },
+      { name: 'Jira', icon: 'https://cdn.svgporn.com/logos/jira.svg' },
+      { name: 'ChatGPT', icon: 'https://cdn.svgporn.com/logos/openai-icon.svg' },
+      { name: 'Windows', icon: 'https://cdn.svgporn.com/logos/microsoft-windows.svg' },
+    ],
+  },
+  {
+    title: 'Soft Skills',
+    subtitle: 'Human Strengths',
+    items: [
+      { name: 'Problem Solving', icon: 'https://cdn.svgporn.com/logos/leetcode.svg' },
+      { name: 'Analytical Thinking', icon: 'https://cdn.svgporn.com/logos/python.svg' },
+      { name: 'Communication', icon: 'https://cdn.svgporn.com/logos/slack-icon.svg' },
+      { name: 'Team Collaboration', icon: 'https://cdn.svgporn.com/logos/github-icon.svg' },
+      { name: 'Adaptability', icon: 'https://cdn.svgporn.com/logos/react.svg' },
     ],
   },
 ];
 
 export const SkillsSection = memo(function SkillsSection() {
+  const { scrollYProgress } = useScroll();
+  const x = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+
   return (
-    <section className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 rounded-t-[3rem] md:rounded-t-[4rem] lg:rounded-t-[5rem] bg-background/95 backdrop-blur-xl border-t border-border/40 shadow-2xl">
+    <section className="relative z-20 py-32 overflow-hidden bg-background">
       <div className="container-custom">
         <SectionHeader
-          eyebrow="Skills"
-          title="Technical Expertise"
-          description="A comprehensive overview of my technical skills and proficiency levels."
+          eyebrow="Expertise"
+          title="What I Work With"
+          description="A living set of skills shaped by real-world projects, systems, and experimentation."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {skillCategories.map((category, categoryIndex) => (
+        <div className="mt-28 space-y-36">
+          {SKILLS.map((group, index) => (
             <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 30 }}
+              key={group.title}
+              style={{ x: index % 2 === 0 ? x : undefined }}
+              initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-              className="card-premium"
+              transition={{
+                duration: 0.9,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="grid grid-cols-12 gap-6 items-start"
             >
-              <h3 className="heading-4 text-xl mb-6 gradient-text">{category.title}</h3>
-              <div className="space-y-6">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium">{skill.name}</span>
-                      <span className="text-muted-foreground">{skill.level}%</span>
-                    </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{
-                          duration: 1,
-                          delay: categoryIndex * 0.1 + skillIndex * 0.1,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        className="h-full rounded-full"
-                        style={{
-                          background: 'linear-gradient(90deg, hsl(192, 91%, 50%), hsl(280, 87%, 65%))',
-                        }}
+              <div className="col-span-12 lg:col-span-4 sticky top-32">
+                <h3 className="text-5xl md:text-6xl font-semibold leading-none tracking-tight">
+                  {group.title}
+                </h3>
+                <p className="mt-4 text-muted-foreground max-w-sm">
+                  {group.subtitle}
+                </p>
+              </div>
+
+              <div className="col-span-12 lg:col-span-8">
+                <motion.ul
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.06 } },
+                  }}
+                  className="flex flex-wrap gap-x-10 gap-y-8"
+                >
+                  {group.items.map((item) => (
+                    <motion.li
+                      key={item.name}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            duration: 0.6,
+                            ease: [0.22, 1, 0.36, 1],
+                          },
+                        },
+                      }}
+                      className="flex items-center gap-3 text-lg md:text-xl font-medium tracking-wide"
+                    >
+                      <img
+                        src={item.icon}
+                        alt={item.name}
+                        className="h-7 w-auto opacity-80"
+                        loading="lazy"
                       />
-                    </div>
-                  </div>
-                ))}
+                      <span>{item.name}</span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
     </section>
   );
 });

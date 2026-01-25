@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { motion } from 'framer-motion';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { TechMarquee } from '@/components/ui/TechMarquee';
 import {
@@ -152,11 +151,7 @@ export const AboutSection = memo(function AboutSection() {
 
         <TechMarquee />
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+        <div
           className="
             grid grid-cols-1
             md:grid-cols-2
@@ -165,9 +160,8 @@ export const AboutSection = memo(function AboutSection() {
           "
         >
           {highlights.map((item) => (
-            <motion.div
+            <div
               key={item.title}
-              variants={itemVariants}
               className="
                 group relative rounded-2xl
                 border border-border/40
@@ -204,16 +198,12 @@ export const AboutSection = memo(function AboutSection() {
                   />
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+        <div
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
@@ -222,12 +212,8 @@ export const AboutSection = memo(function AboutSection() {
             { value: '6+', label: 'Certifications Earned' },
             { value: '3+', label: 'Major Awards & Recognitions' },
           ].map((stat, i) => (
-            <motion.div
+            <div
               key={stat.label}
-              initial={{ opacity: 0, scale: 0.6 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
               className="text-center"
             >
               <div className="heading-2 gradient-text mb-2">
@@ -236,9 +222,9 @@ export const AboutSection = memo(function AboutSection() {
               <div className="text-sm text-muted-foreground">
                 {stat.label}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

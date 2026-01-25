@@ -6,6 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
 
 import logo from '../../../public/assets/logodark.webp';
+import logoLight from '../../../public/assets/logolight.webp';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -60,7 +61,7 @@ export function Navigation() {
               whileTap={{ scale: 0.95 }}
               className="font-display text-xl font-bold"
             >
-              <img src={logo} alt="Logo" className="h-10" />
+              <img src={resolvedTheme === 'dark' ? logo : logoLight} alt="Logo" className="h-10" />
             </motion.div>
           </Link>
 
