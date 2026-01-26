@@ -1,149 +1,165 @@
 import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { Trophy, Award, Medal, Star, ExternalLink } from 'lucide-react';
+
+/* =========================
+   ACHIEVEMENTS DATA
+========================= */
 
 const achievements = [
   {
     id: 1,
-    title: 'Awwwards Site of the Day',
-    organization: 'Awwwards',
-    date: '2024',
-    description: 'Recognized for exceptional web design and user experience on a client project.',
-    icon: Trophy,
-    type: 'Award',
-    link: 'https://awwwards.com',
+    title: '2nd Position at UTKARSH 1.0 Hackathon',
+    organization: 'Uttarakhand Technical University',
+    date: 'May 2025',
+    description:
+      'Recognized for exceptional visual design, interaction quality, and refined user experience on a premium client project.',
+    image: '../../assets/achievement/hutu.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_hackathon-ai-artificialintelligence-activity-7329004270576394240-n1ba',
   },
   {
     id: 2,
-    title: 'Google Developer Expert',
-    organization: 'Google',
-    date: '2023',
-    description: 'Recognized as a Google Developer Expert in Web Technologies.',
-    icon: Star,
-    type: 'Certification',
-    link: 'https://developers.google.com/experts',
+    title: 'Student of the Year',
+    organization: 'Roorkee College of Engineering',
+    date: 'May 2025',
+    description:
+      'Recognized for exceptional visual design, interaction quality, and refined user experience on a premium client project.',
+    image: '../../assets/achievement/soty.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_studentoftheyear-haridwaruniversity-btechcse-activity-7327741770513952770-KVdU',
   },
   {
     id: 3,
-    title: 'AWS Solutions Architect',
-    organization: 'Amazon Web Services',
-    date: '2023',
-    description: 'Professional certification for designing distributed systems on AWS.',
-    icon: Award,
-    type: 'Certification',
-    link: 'https://aws.amazon.com/certification',
+    title: 'Academic Excellence Award',
+    organization: 'Roorkee College of Engineering',
+    date: 'April 2025',
+    description:
+      'Professional certification validating real-world experience in architecting scalable and secure cloud systems.',
+    image: '../../assets/achievement/aea.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_academicexcellence-awardwinner-btechcse-activity-7324465234138607616-_VPC',
   },
   {
     id: 4,
-    title: 'TechCrunch Hackathon Winner',
-    organization: 'TechCrunch Disrupt',
-    date: '2023',
-    description: 'First place for developing an AI-powered accessibility tool in 24 hours.',
-    icon: Trophy,
-    type: 'Hackathon',
-    link: 'https://techcrunch.com',
+    title: 'Vice Chairperson',
+    organization: 'Trojan Club @ Roorkee College of Engineering',
+    date: '2025',
+    description:
+      'First place winner for building an AI-powered accessibility platform under extreme time constraints.',
+    image: '../../assets/achievement/vcp.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_leadership-innovation-hackathon-activity-7374740185026260992-7BUj',
   },
   {
     id: 5,
-    title: 'CSS Design Awards',
-    organization: 'CSSDA',
-    date: '2022',
-    description: 'Best UI Design and Best Innovation awards for portfolio website.',
-    icon: Medal,
-    type: 'Award',
-    link: 'https://cssdesignawards.com',
+    title: 'Winner in at SDMEL-2025',
+    organization: 'Haridwar University',
+    date: '2025',
+    description:
+      '1st position in the UG/PG category, along with a cash prize of ₹2000 at 1st International Conference on Sustainable Development in Management, Engineering, and Life Sciences (SDMEL-2025)',
+    image: '../../assets/achievement/sdmel.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_sdmel2025-haridwaruniversity-internationalconference-activity-7345733607098937359-lKaS',
   },
   {
     id: 6,
-    title: 'Open Source Contributor',
-    organization: 'GitHub',
-    date: '2022',
-    description: 'Arctic Code Vault Contributor for contributions to open source projects.',
-    icon: Star,
-    type: 'Recognition',
-    link: 'https://github.com',
+    title: '2nd Position at TechSangram',
+    organization: 'Haridwar University',
+    date: '2025',
+    description:
+      'Recognized for impactful open-source contributions adopted by developers worldwide.',
+    image: '../../assets/achievement/ts.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_techsangram2025-projectpresentation-skillindia-activity-7328476780581867520-L_r2',
   },
   {
     id: 7,
-    title: 'Microsoft Certified',
-    organization: 'Microsoft',
-    date: '2021',
-    description: 'Azure Developer Associate certification for cloud development.',
-    icon: Award,
-    type: 'Certification',
-    link: 'https://microsoft.com/learn',
+    title: 'Campus Ambassador for IDS Blockchain',
+    organization: 'Roorkee College of Engineering',
+    date: '2023',
+    description:
+      'Recognized for impactful open-source contributions adopted by developers worldwide.',
+    image: '../../assets/achievement/ca.png',
+    link: 'https://www.linkedin.com/posts/ankit1990asap_techsangram2025-projectpresentation-skillindia-activity-7328476780581867520-L_r2',
   },
-  {
-    id: 8,
-    title: 'Product Hunt Golden Kitty',
-    organization: 'Product Hunt',
-    date: '2021',
-    description: 'Finalist in Developer Tools category for an open-source project.',
-    icon: Trophy,
-    type: 'Award',
-    link: 'https://producthunt.com',
-  },
+  
 ];
 
-const typeColors: Record<string, string> = {
-  Award: 'bg-yellow-500/20 text-yellow-500',
-  Certification: 'bg-blue-500/20 text-blue-500',
-  Hackathon: 'bg-purple-500/20 text-purple-500',
-  Recognition: 'bg-green-500/20 text-green-500',
-};
+/* =========================
+   PAGE COMPONENT
+========================= */
 
 const Achievements = () => {
   return (
     <Layout>
-      <section className="pt-32 pb-12">
-        <div className="container-custom">
+      {/* PAGE HEADER */}
+      <section className="pt-32 pb-24">
+        <div className="container-custom max-w-5xl">
           <SectionHeader
             eyebrow="Achievements"
-            title="Recognition & Awards"
-            description="A collection of certifications, awards, and recognitions that highlight my contributions to the tech community."
+            title="Achievements & Honors"
+            description="A curated collection of awards, certifications, and recognitions that reflect excellence, innovation, and real-world impact."
           />
         </div>
       </section>
 
-      <section className="pb-24">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {achievements.map((achievement, i) => (
-              <motion.a
-                key={achievement.id}
-                href={achievement.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 30 }}
+      {/* AWARDS STYLE ALTERNATING SECTIONS */}
+      <section className="pb-36">
+        <div className="container-custom space-y-40">
+          {achievements.map((item, index) => {
+            const reverse = index % 2 !== 0;
+
+            return (
+              <motion.section
+                key={item.id}
+                initial={{ opacity: 0, y: 80 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="card-premium group block"
+                viewport={{ once: true, margin: '-120px' }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-20 items-center ${
+                  reverse ? 'lg:[&>*:first-child]:order-2' : ''
+                }`}
               >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <achievement.icon className="w-6 h-6" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${typeColors[achievement.type]}`}>
-                        {achievement.type}
-                      </span>
-                      <span className="text-xs text-muted-foreground">{achievement.date}</span>
-                    </div>
-                    <h3 className="heading-4 text-lg mb-1 group-hover:text-primary transition-colors">
-                      {achievement.title}
-                    </h3>
-                    <p className="text-sm text-primary mb-2">{achievement.organization}</p>
-                    <p className="text-sm text-muted-foreground">{achievement.description}</p>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+                {/* IMAGE BLOCK */}
+                <motion.a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.06 }}
+                  transition={{ duration: 0.6, ease: 'easeOut' }}
+                  className="group relative block overflow-hidden rounded-[2.5rem]"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-[480px] object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                </motion.a>
+
+                {/* TEXT BLOCK */}
+                <div className="max-w-xl">
+                  <span className="text-sm uppercase tracking-wider text-primary">
+                    {item.organization} · {item.date}
+                  </span>
+
+                  <h2 className="heading-2 mt-5 mb-6">
+                    {item.title}
+                  </h2>
+
+                  <p className="text-muted-foreground leading-relaxed text-lg mb-10">
+                    {item.description}
+                  </p>
+
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 text-sm font-medium text-primary hover:underline"
+                  >
+                    View Recognition
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                 </div>
-              </motion.a>
-            ))}
-          </div>
+              </motion.section>
+            );
+          })}
         </div>
       </section>
     </Layout>
