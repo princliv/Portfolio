@@ -37,37 +37,39 @@ export function TechMarquee() {
       <div className="absolute right-0 top-0 bottom-0 w-40 md:w-56 lg:w-72 z-10 pointer-events-none bg-gradient-to-l from-background via-background/80 to-transparent" />
 
       {/* Marquee wrapper */}
-      <div className="group/marquee">
+      <div className="group/marquee overflow-hidden whitespace-nowrap">
         <div
-          className="flex items-center gap-2 animate-marquee"
+          className="inline-flex items-center gap-2 marquee-content"
           style={{
-            height: '350px', // increased height
-            willChange: 'transform',
-            animationDuration: '36s',
+            height: '350px',
           }}
         >
+          {/* First set */}
           {marqueeImages.map((src, i) => (
-            <div key={`first-${i}`} className="flex-shrink-0 h-full flex items-center">
+            <div key={`first-${i}`} className="inline-flex flex-shrink-0 h-full items-center px-2">
               <img
                 src={src}
                 alt={`Tech showcase ${i + 1}`}
                 loading="lazy"
-                className="h-full w-auto object-contain max-w-none"
+                className="h-full w-auto object-contain"
+                draggable="false"
               />
             </div>
           ))}
 
+          {/* Second set - exact duplicate for seamless loop */}
           {marqueeImages.map((src, i) => (
             <div
               key={`second-${i}`}
-              className="flex-shrink-0 h-full flex items-center"
+              className="inline-flex flex-shrink-0 h-full items-center px-2"
               aria-hidden="true"
             >
               <img
                 src={src}
                 alt=""
                 loading="lazy"
-                className="h-full w-auto object-contain max-w-none"
+                className="h-full w-auto object-contain"
+                draggable="false"
               />
             </div>
           ))}

@@ -132,6 +132,10 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "marquee-scroll": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
         "shooting-star": {
           "0%": { 
             transform: "translate(0, 0) scale(0)",
@@ -213,6 +217,7 @@ export default {
         "line-grow": "line-grow 0.6s ease-out forwards",
         "blur-in": "blur-in 0.8s ease-out forwards",
         "marquee": "marquee 60s linear infinite",
+        "marquee-scroll": "marquee-scroll 18s linear infinite",
         "shooting-star": "shooting-star 2s linear infinite",
         "cosmic-float": "cosmic-float 8s ease-in-out infinite",
         "nebula-pulse": "nebula-pulse 4s ease-in-out infinite",
