@@ -8,7 +8,7 @@ import { HeroBackground } from '@/components/three/HeroBackground';
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/princliv', label: 'GitHub' },
-  { icon: Linkedin, href: 'www.linkedin.com/in/ankit1990asap', label: 'LinkedIn' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/ankit1990asap', label: 'LinkedIn' },
   { icon: Mail, href: 'mailto:ankitkumar1990asap@gmail.com', label: 'Email' },
 ];
 
@@ -52,7 +52,7 @@ export const HeroSection = memo(function HeroSection() {
             <h1 className="heading-1 leading-tight">
               <AnimatedText delay={0.2}>Hi, I'm</AnimatedText>
               <motion.span 
-                className="block gradient-text glow-text cosmic-text"
+                className="block gradient-text"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}

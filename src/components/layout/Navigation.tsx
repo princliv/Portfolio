@@ -88,13 +88,6 @@ export function Navigation() {
                   className={`nav-link relative ${location.pathname === link.href ? 'active text-foreground' : ''}`}
                 >
                   {link.label}
-                  {location.pathname === link.href && (
-                    <motion.div
-                      className="absolute inset-0 bg-primary/10 rounded-lg -z-10"
-                      layoutId="activeNav"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
                 </Link>
               </motion.div>
             ))}

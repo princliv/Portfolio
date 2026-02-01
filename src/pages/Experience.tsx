@@ -2,108 +2,7 @@ import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { Briefcase, Calendar, MapPin } from 'lucide-react';
-
-const experiences = [
-  {
-    id: 1,
-    role: 'Software Developer',
-    company: 'Creditor Academy',
-    location: 'Roorkee, India',
-    period: 'May 2025 - Present',
-    description:
-      'Developing and optimizing modern frontend interfaces with a strong focus on clean UI, responsiveness, and user engagement.',
-    technologies: [
-      'Next.js',
-      'ReactJS',
-      'Node.js',
-      'REST APIs',
-      'AWS',
-      'Figma',
-      'Canva',
-      'Hostinger',
-      'Jira',
-      'Vercel',
-      'Netlify',
-      'Git',
-      'GitHub',
-      'Clarity Analytics',
-      'Google Search Console',
-      'Google Analytics',
-    ],
-    highlights: [
-      'Built and integrated REST APIs for seamless frontend–backend data flow',
-      'Implemented gamification features to boost user engagement',
-      'Designed responsive and visually consistent user interfaces',
-    ],
-  },
-  {
-    id: 2,
-    role: 'Android Developer Intern',
-    company: 'EduSkills (AICTE NEAT | Google for Developers)',
-    location: 'Remote',
-    period: 'Apr 2024 - Jun 2024',
-    description:
-      'Completed a 10-week virtual internship focused on advanced Android application development with hands-on projects.',
-    technologies: ['Android Studio', 'Kotlin', 'Java', 'Firebase'],
-    highlights: [
-      'Designed and built efficient Android applications',
-      'Strengthened expertise in Java and Kotlin',
-      'Achieved an "Excellent" grade for outstanding performance',
-    ],
-  },
-  {
-    id: 3,
-    role: 'Software Development Engineer Intern',
-    company: 'Uma Robotics PVT Ltd.',
-    location: 'Haridwar, India',
-    period: 'Jan 2024 - Apr 2024',
-    description:
-      'Worked on software and web development for mobile robots, focusing on application enhancement and rigorous testing.',
-    technologies: [
-      'React Native',
-      'NodeJS',
-      'MongoDB',
-      'Python',
-      'Figma',
-      'Canva',
-    ],
-    highlights: [
-      'Enhanced mobile app for monitoring robotic systems',
-      'Ensured application stability through extensive testing',
-      'Highly recommended by the organization for future roles',
-    ],
-  },
-  {
-    id: 4,
-    role: 'Android Developer Intern',
-    company: 'Bharat Intern',
-    location: 'Remote',
-    period: 'Aug 2023 - Sept 2023',
-    description:
-      'Developed real-world Android applications while collaborating with industry professionals.',
-    technologies: ['Android Studio', 'Java', 'Kotlin', 'Firebase'],
-    highlights: [
-      'Built a temperature unit converter application',
-      'Developed an interactive quiz application',
-      'Gained hands-on experience in real-world app development',
-    ],
-  },
-  {
-    id: 5,
-    role: 'Cybersecurity Intern',
-    company: 'IBM SkillsBuild (AICTE & Edunet Foundation)',
-    location: 'Remote',
-    period: 'Jun 2023 - Jul 2023',
-    description:
-      'Completed an intensive cybersecurity internship focused on practical security concepts and automation.',
-    technologies: ['Python', 'SQL', 'Tkinter', 'Pillow'],
-    highlights: [
-      'Trained in core cybersecurity concepts and tools',
-      'Automated cybersecurity tasks using Python',
-      'Prepared to handle real-world digital security challenges',
-    ],
-  },
-];
+import experienceData from '@/data/experience.json';
 
 const Experience = () => {
   return (
@@ -124,7 +23,7 @@ const Experience = () => {
             {/* Center Timeline Line */}
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
 
-            {experiences.map((exp, i) => {
+            {experienceData.items.map((exp, i) => {
               const isLeft = i % 2 === 0;
 
               return (

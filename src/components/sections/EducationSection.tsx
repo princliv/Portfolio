@@ -2,6 +2,7 @@ import { memo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { GraduationCap, BookOpen, Users, Award, ExternalLink, Calendar, TrendingUp } from 'lucide-react';
+import educationDataJson from '@/data/education.json';
 
 interface EducationItem {
   id: number;
@@ -16,41 +17,7 @@ interface EducationItem {
   tags?: string[];
 }
 
-const educationData: EducationItem[] = [
-  {
-    id: 1,
-    title: 'Bachelor of Technology (Hons.)',
-    branch: 'Computer Science & Engineering',
-    institution: 'Uttarakhand Technical University',
-    institutionLogo: '../../../public/assets/logo/utu.png',
-    period: '2021 - 2025',
-    description: 'Computer Science & Engineering with focus on software development, algorithms, and system design.',
-    grade: 'CGPA: 8.5/10',
-    tags: ['Computer Science', 'Software Engineering', 'Algorithms', 'Data Structures', 'Database Management System', 'Operating System', 'Computer Networks', 'Computer Architecture'],
-  },
-  {
-    id: 2,
-    title: 'Intermediate',
-    branch: 'Science',
-    institution: 'Kendriya Vidyalaya Danapur Cantt, Patna',
-    institutionLogo: '../../../public/assets/logo/kv.png',
-    period: '2018 - 2020',
-    description: 'Science stream with Mathematics, Physics, Chemistry, and Computer Science.',
-    grade: 'Percentage: 81%',
-    tags: ['Mathematics', 'Physics', 'Chemistry', 'English', 'Hindi', 'Computer Science'],
-  },
-  {
-    id: 3,
-    title: 'Secondary School',
-    branch: 'Science',
-    institution: 'Kendriya Vidyalaya Danapur Cantt, Patna',
-    institutionLogo: '../../../public/assets/logo/kv.png',
-    period: '2016 - 2018',
-    description: 'Secondary School with Mathematics, Science, and Social Studies.',
-    grade: 'Percentage: 81%',
-    tags: ['Mathematics', 'Science', 'Social Studies', 'English', 'Hindi'],
-  },
-];
+const educationData: EducationItem[] = educationDataJson.education as EducationItem[];
 
 const coursesData: EducationItem[] = [
   {

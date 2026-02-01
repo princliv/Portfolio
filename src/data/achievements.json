@@ -1,0 +1,73 @@
+{
+  "header": {
+    "eyebrow": "Achievements",
+    "title": "Achievements & Honors",
+    "description": "A curated collection of awards, certifications, and recognitions that reflect excellence, innovation, and real-world impact."
+  },
+  "items": [
+    {
+      "id": 1,
+      "title": "2nd Position at UTKARSH 1.0 Hackathon",
+      "organization": "Uttarakhand Technical University",
+      "date": "May 2025",
+      "description": "Secured 2nd Position at UTKARSH 1.0, a prestigious state-level hackathon organized by Veer Madho Singh Bhandari Uttarakhand Technical University (VMSB UTU), among 216 teams (1100+ participants). Our team developed an AI-powered public service mobile application aligned with the UN Sustainable Development Goals, focusing on rural development and real-world impact. The solution featured AI-driven complaint management, disaster alerts, emergency medical access, agricultural assistance, and a smart tourist guide, earning a cash prize of ₹30,000 and recognition from eminent leaders, academicians, and industry experts.",
+      "image": "../../assets/achievement/hutu.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_hackathon-ai-artificialintelligence-activity-7329004270576394240-n1ba"
+    },
+    {
+      "id": 2,
+      "title": "Student of the Year",
+      "organization": "Roorkee College of Engineering",
+      "date": "May 2025",
+      "description": "Honored to be awarded Student of the Year 2025 at Haridwar University (formerly Roorkee College of Engineering) during my B.Tech (CSE). This recognition reflects consistent academic excellence, active participation in hackathons, coding contests, and cultural fests, along with leadership roles as Vice Chairperson of the Technical Club “Trojan” and Student Ambassador at IDS Bharat Blockchain Network. The journey has shaped my technical, leadership, and collaborative skills, reinforcing my commitment to excellence and impactful innovation as I move forward.",
+      "image": "../../assets/achievement/soty.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_studentoftheyear-haridwaruniversity-btechcse-activity-7327741770513952770-KVdU"
+    },
+    {
+      "id": 3,
+      "title": "Academic Excellence Award",
+      "organization": "Roorkee College of Engineering",
+      "date": "April 2025",
+      "description": "Awarded the Academic Excellence Award by Haridwar University for outstanding performance in B.Tech (CSE), 6th Semester (2024–25), scoring 80 marks. The honor was presented by Dr. Kiran Bedi during Utkarsh, the university’s annual fest—an inspiring moment marked by her insights on leadership, discipline, and service.",
+      "image": "../../assets/achievement/aea.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_academicexcellence-awardwinner-btechcse-activity-7324465234138607616-_VPC"
+    },
+    {
+      "id": 4,
+      "title": "Chairperson",
+      "organization": "Trojan Club @ Roorkee College of Engineering",
+      "date": "2025",
+      "description": "Served as Chairperson of the Technical Club “Trojan”, where I led the revival and transformation of an inactive club into one of the most dynamic student-led technical communities on campus. Expanded the club to 400+ active members, fostering a strong culture of innovation, collaboration, and peer learning. Spearheaded multiple coding competitions, workshops, and a 24-hour hackathon, empowering students with hands-on technical exposure, teamwork, and problem-solving skills. This journey strengthened my leadership, organizational, and community-building abilities while creating a lasting impact on campus technical culture.",
+      "image": "../../assets/achievement/vcp.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_leadership-innovation-hackathon-activity-7374740185026260992-7BUj"
+    },
+    {
+      "id": 5,
+      "title": "Winner in at SDMEL-2025",
+      "organization": "Haridwar University",
+      "date": "2025",
+      "description": "Presented a research paper on AI-based chatbots for student mental health support at the 1st International Conference SDMEL-2025. Secured 1st Position (UG/PG category) with a ₹2,000 cash prize. Also contributed as a volunteer in the Technical and Help Desk teams, supporting smooth event operations.",
+      "image": "../../assets/achievement/sdmel.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_sdmel2025-haridwaruniversity-internationalconference-activity-7345733607098937359-lKaS"
+    },
+    {
+      "id": 6,
+      "title": "2nd Position at TechSangram",
+      "organization": "Haridwar University",
+      "date": "2025",
+      "description": "ecured Second Position at TechSangram 2025, a university-wide project presentation competition at Haridwar University. Presented “UdyamPath – A Complete Solution for Empowering Students to Thrive,” competing among top B.Tech teams across all branches and years.",
+      "image": "../../assets/achievement/ts.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_techsangram2025-projectpresentation-skillindia-activity-7328476780581867520-L_r2"
+    },
+    {
+      "id": 7,
+      "title": "Campus Ambassador — BBN (IDS | AICTE)",
+      "organization": "Roorkee College of Engineering",
+      "date": "2023",
+      "description": "Campus Ambassador for Bharat Blockchain Network (BBN), an initiative by IDS in support of AICTE (from 26 Oct 2022). Responsibilities included managing and expanding the campus blockchain chapter, promoting BBN events and hackathons, ensuring network efficiency, maintaining accurate member data, and driving on-ground awareness through workshops, festivals, and branding activities.",
+      "image": "../../assets/achievement/ca.png",
+      "link": "https://www.linkedin.com/posts/ankit1990asap_techsangram2025-projectpresentation-skillindia-activity-7328476780581867520-L_r2"
+    }
+  ]
+}
+

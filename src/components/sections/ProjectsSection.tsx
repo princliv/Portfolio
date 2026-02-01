@@ -65,7 +65,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
   return (
     <section className="relative z-20 bg-background/95 backdrop-blur-xl border-t border-border/40">
       {/* Header */}
-      <div className="container-custom pt-24 md:pt-32 lg:pt-40 pb-16">
+      <div className="container-custom pt-14 md:pt-22 lg:pt-30 pb-10">
         <SectionHeader
           eyebrow="Projects"
           title="Featured Work"
@@ -95,7 +95,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
 
         {/* RIGHT — Natural Scroll Content */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16">
-          <div className="max-w-5xl mx-auto py-[30vh] space-y-[60vh]">
+          <div className="max-w-5xl mx-auto py-[15vh] space-y-[30vh]">
             {featuredProjects.map((project) => (
               <section
                 key={project.id}
@@ -107,7 +107,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
                     <motion.img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-[50vh] md:h-[60vh] object-cover"
+                      className="w-full h-[40vh] md:h-[50vh] object-cover"
                       whileHover={{ scale: 1.04 }}
                       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     />

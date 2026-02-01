@@ -1,0 +1,40 @@
+{
+  "header": {
+    "eyebrow": "Contact",
+    "title": "Let's Create Together",
+    "description": "Have a project in mind or want to collaborate? I'm always excited to discuss new opportunities and ideas."
+  },
+  "location": {
+    "full": "New Delhi, India"
+  },
+  "socialLinks": [
+    {
+      "id": "github",
+      "href": "https://github.com/princliv",
+      "label": "GitHub",
+      "username": "@princliv"
+    },
+    {
+      "id": "linkedin",
+      "href": "https://www.linkedin.com/in/ankit1990asap",
+      "label": "LinkedIn",
+      "username": "@ankit1990asap"
+    },
+    {
+      "id": "twitter",
+      "href": "https://twitter.com",
+      "label": "Twitter/X",
+      "username": "@johndoe"
+    },
+    {
+      "id": "email",
+      "href": "mailto:ankitkumar1990asap@gmail.com",
+      "label": "Email",
+      "username": "ankitkumar1990asap@gmail.com"
+    }
+  ],
+  "resume": {
+    "url": "#",
+    "label": "Download Resume"
+  }
+}

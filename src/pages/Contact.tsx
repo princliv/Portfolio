@@ -3,14 +3,21 @@ import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { MagneticButton } from '@/components/ui/MagneticButton';
-import { Send, Github, Linkedin, Twitter, Mail, MapPin, Download, CheckCircle } from 'lucide-react';
+import { Send, Github, Linkedin, Twitter, Mail, MapPin, Download, CheckCircle, AlertCircle } from 'lucide-react';
+import contactData from '@/data/contact.json';
+import { sendEmail, sendEmailFallback } from '@/lib/emailService';
 
-const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub', username: '@johndoe' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn', username: '/in/johndoe' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter/X', username: '@johndoe' },
-  { icon: Mail, href: 'mailto:hello@johndoe.dev', label: 'Email', username: 'hello@johndoe.dev' },
-];
+const iconMap = {
+  github: Github,
+  linkedin: Linkedin,
+  twitter: Twitter,
+  email: Mail,
+} as const;
+
+const socialLinks = contactData.socialLinks.map((link) => ({
+  ...link,
+  icon: iconMap[link.id as keyof typeof iconMap],
+}));
 
 const Contact = () => {
   const [formState, setFormState] = useState({
@@ -21,20 +28,32 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormState({ name: '', email: '', subject: '', message: '' });
-    
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSubmitted(false), 5000);
+    try {
+      // Try to send email using EmailJS (if configured)
+      // For now, we'll use the fallback function
+      const result = await sendEmailFallback(formState);
+      
+      if (result.success) {
+        setIsSubmitted(true);
+        setFormState({ name: '', email: '', subject: '', message: '' });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setSubmitError(result.message);
+      }
+    } catch (error) {
+      setSubmitError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -49,9 +68,9 @@ const Contact = () => {
       <section className="pt-32 pb-12">
         <div className="container-custom">
           <SectionHeader
-            eyebrow="Contact"
-            title="Let's Create Together"
-            description="Have a project in mind or want to collaborate? I'm always excited to discuss new opportunities and ideas."
+            eyebrow={contactData.header.eyebrow}
+            title={contactData.header.title}
+            description={contactData.header.description}
           />
         </div>
       </section>
@@ -75,7 +94,7 @@ const Contact = () => {
               {/* Location */}
               <div className="flex items-center gap-3 mb-8 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>San Francisco, CA • Open to Remote</span>
+                <span>{contactData.location.full}</span>
               </div>
 
               {/* Social Links */}
@@ -102,9 +121,9 @@ const Contact = () => {
 
               {/* Resume Download */}
               <MagneticButton className="btn-outline w-full justify-center">
-                <a href="#" className="flex items-center gap-2">
+                <a href={contactData.resume.url} className="flex items-center gap-2">
                   <Download className="w-5 h-5" />
-                  Download Resume
+                  {contactData.resume.label}
                 </a>
               </MagneticButton>
             </motion.div>
@@ -127,6 +146,17 @@ const Contact = () => {
                   >
                     <CheckCircle className="w-5 h-5" />
                     <span>Message sent successfully! I'll get back to you soon.</span>
+                  </motion.div>
+                )}
+
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 p-4 mb-6 rounded-xl bg-red-500/10 text-red-500"
+                  >
+                    <AlertCircle className="w-5 h-5" />
+                    <span>{submitError}</span>
                   </motion.div>
                 )}
 

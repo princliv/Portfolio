@@ -1,75 +1,7 @@
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-
-const skillCategories = [
-  {
-    title: 'Frontend Development',
-    description: 'Building beautiful, responsive, and performant user interfaces',
-    skills: [
-      { name: 'React', level: 95, icon: '⚛️' },
-      { name: 'TypeScript', level: 92, icon: '📘' },
-      { name: 'Next.js', level: 88, icon: '▲' },
-      { name: 'Tailwind CSS', level: 94, icon: '🎨' },
-      { name: 'Framer Motion', level: 85, icon: '✨' },
-      { name: 'Three.js', level: 75, icon: '🎮' },
-    ],
-  },
-  {
-    title: 'Backend Development',
-    description: 'Creating scalable and secure server-side applications',
-    skills: [
-      { name: 'Node.js', level: 90, icon: '🟢' },
-      { name: 'Python', level: 85, icon: '🐍' },
-      { name: 'PostgreSQL', level: 88, icon: '🐘' },
-      { name: 'GraphQL', level: 82, icon: '◈' },
-      { name: 'Redis', level: 78, icon: '🔴' },
-      { name: 'Docker', level: 85, icon: '🐳' },
-    ],
-  },
-  {
-    title: 'AI & Machine Learning',
-    description: 'Implementing intelligent solutions with cutting-edge ML',
-    skills: [
-      { name: 'TensorFlow', level: 80, icon: '🧠' },
-      { name: 'PyTorch', level: 75, icon: '🔥' },
-      { name: 'OpenAI API', level: 88, icon: '🤖' },
-      { name: 'LangChain', level: 78, icon: '🔗' },
-      { name: 'Scikit-learn', level: 82, icon: '📊' },
-      { name: 'Computer Vision', level: 72, icon: '👁️' },
-    ],
-  },
-  {
-    title: 'Mobile Development',
-    description: 'Crafting native-like mobile experiences',
-    skills: [
-      { name: 'React Native', level: 85, icon: '📱' },
-      { name: 'Expo', level: 82, icon: '🚀' },
-      { name: 'Flutter', level: 65, icon: '🦋' },
-      { name: 'iOS/Swift', level: 60, icon: '🍎' },
-    ],
-  },
-  {
-    title: 'DevOps & Cloud',
-    description: 'Managing infrastructure and deployments',
-    skills: [
-      { name: 'AWS', level: 82, icon: '☁️' },
-      { name: 'Vercel', level: 90, icon: '▲' },
-      { name: 'GitHub Actions', level: 88, icon: '⚡' },
-      { name: 'Kubernetes', level: 70, icon: '☸️' },
-    ],
-  },
-  {
-    title: 'Tools & Design',
-    description: 'Design and collaboration essentials',
-    skills: [
-      { name: 'Git', level: 95, icon: '📚' },
-      { name: 'Figma', level: 80, icon: '🎨' },
-      { name: 'VS Code', level: 95, icon: '💻' },
-      { name: 'Notion', level: 88, icon: '📝' },
-    ],
-  },
-];
+import skillsData from '@/data/skills.json';
 
 const Skills = () => {
   return (
@@ -87,7 +19,7 @@ const Skills = () => {
       <section className="pb-24">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {skillCategories.map((category, categoryIndex) => (
+            {skillsData.categories.map((category, categoryIndex) => (
               <motion.div
                 key={category.title}
                 initial={{ opacity: 0, y: 40 }}

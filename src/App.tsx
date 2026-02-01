@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { SuspenseFallback } from "@/components/ui/SuspenseFallback";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 // Lazy load all pages
 const Index = lazy(() => import("./pages/Index"));
@@ -38,6 +39,7 @@ const App = () => (
             v7_relativeSplatPath: true,
           }}
         >
+          <ScrollToTop />
           <Suspense fallback={<SuspenseFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
