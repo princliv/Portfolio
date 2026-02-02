@@ -1,299 +1,295 @@
-import { memo, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Calendar } from 'lucide-react';
+import { memo, useState, useEffect, useMemo } from 'react';
 import { githubService } from '@/lib/githubService';
 
 interface ContributionDay {
   date: string;
   count: number;
-  level: number; // 0-4 for contribution intensity
 }
 
 interface ContributionData {
   year: number;
   totalContributions: number;
   weeks: ContributionDay[][];
+  startDate: Date; // first Sunday used for the grid
 }
 
-const processContributionData = (contributions: any[], year: number): ContributionData => {
+const SQUARE_SIZE = 10;
+const SQUARE_GAP = 2;
+const WEEK_WIDTH = SQUARE_SIZE + SQUARE_GAP;
+
+/** Contribution colors use CSS variables --contrib-0 to --contrib-4 (light/dark in index.css) */
+
+function processContributionData(contributions: { date: string; contributionCount: number }[], year: number): ContributionData {
   const weeks: ContributionDay[][] = [];
   const startDate = new Date(year, 0, 1);
   const endDate = new Date(year, 11, 31);
   let totalContributions = 0;
-  
-  // Start from the first Sunday of the year or Jan 1st
+
   let currentDate = new Date(startDate);
   while (currentDate.getDay() !== 0) {
     currentDate.setDate(currentDate.getDate() - 1);
   }
-  
+  const gridStartDate = new Date(currentDate);
   let currentWeek: ContributionDay[] = [];
-  
+
   while (currentDate <= endDate) {
-    const contributionData = contributions.find(c => c.date === currentDate.toISOString().split('T')[0]);
-    const contributionCount = contributionData?.contributionCount || 0;
-    const level = contributionCount === 0 ? 0 : Math.min(4, Math.ceil(contributionCount / 2));
-    
-    currentWeek.push({
-      date: currentDate.toISOString().split('T')[0],
-      count: contributionCount,
-      level
-    });
-    
-    totalContributions += contributionCount;
-    
+    const dateStr = currentDate.toISOString().split('T')[0];
+    const c = contributions.find((x) => x.date === dateStr);
+    const count = c?.contributionCount ?? 0;
+    totalContributions += count;
+    currentWeek.push({ date: dateStr, count });
     if (currentWeek.length === 7) {
       weeks.push([...currentWeek]);
       currentWeek = [];
     }
-    
     currentDate.setDate(currentDate.getDate() + 1);
   }
-  
-  // Add the last week if it has days
   if (currentWeek.length > 0) {
     while (currentWeek.length < 7) {
       currentWeek.push({
         date: currentDate.toISOString().split('T')[0],
         count: 0,
-        level: 0
       });
       currentDate.setDate(currentDate.getDate() + 1);
     }
     weeks.push(currentWeek);
   }
-  
-  return { year, totalContributions, weeks };
-};
 
-const generateMockContributionData = (year: number): ContributionData => {
-  const weeks: ContributionDay[][] = [];
-  const startDate = new Date(year, 0, 1);
-  const endDate = new Date(year, 11, 31);
-  let totalContributions = 0;
-  
-  // Start from the first Sunday of the year or Jan 1st
-  let currentDate = new Date(startDate);
-  while (currentDate.getDay() !== 0) {
-    currentDate.setDate(currentDate.getDate() - 1);
-  }
-  
-  let currentWeek: ContributionDay[] = [];
-  
-  while (currentDate <= endDate) {
-    const contributionCount = Math.floor(Math.random() * 10);
-    const level = contributionCount === 0 ? 0 : Math.min(4, Math.ceil(contributionCount / 2));
-    
-    currentWeek.push({
-      date: currentDate.toISOString().split('T')[0],
-      count: contributionCount,
-      level
+  return { year, totalContributions, weeks, startDate: gridStartDate };
+}
+
+function generateMockContributionData(year: number): ContributionData {
+  const contributions: { date: string; contributionCount: number }[] = [];
+  const start = new Date(year, 0, 1);
+  const end = new Date(year, 11, 31);
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    contributions.push({
+      date: d.toISOString().split('T')[0],
+      contributionCount: Math.floor(Math.random() * 15),
     });
-    
-    totalContributions += contributionCount;
-    
-    if (currentWeek.length === 7) {
-      weeks.push([...currentWeek]);
-      currentWeek = [];
-    }
-    
-    currentDate.setDate(currentDate.getDate() + 1);
   }
-  
-  // Add the last week if it has days
-  if (currentWeek.length > 0) {
-    while (currentWeek.length < 7) {
-      currentWeek.push({
-        date: currentDate.toISOString().split('T')[0],
-        count: 0,
-        level: 0
-      });
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    weeks.push(currentWeek);
-  }
-  
-  return { year, totalContributions, weeks };
-};
+  return processContributionData(contributions, year);
+}
 
-const ContributionTooltip = ({ day, visible }: { day: ContributionDay; visible: boolean }) => {
-  if (!visible || day.count === 0) return null;
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="absolute z-50 px-3 py-2 text-xs text-white bg-gray-900 rounded-lg shadow-lg whitespace-nowrap pointer-events-none"
-      style={{ bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(-8px)' }}
-    >
-      <div className="font-semibold">{day.count} contributions</div>
-      <div className="text-gray-300">{new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
-      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-    </motion.div>
-  );
-};
+/** Compute contribution level 0–4 from count, relative to max (GitHub-style) */
+function getLevel(count: number, maxCount: number): number {
+  if (count <= 0) return 0;
+  if (maxCount <= 0) return 0;
+  if (maxCount === 1) return 1;
+  const ratio = count / maxCount;
+  if (ratio <= 0.25) return 1;
+  if (ratio <= 0.5) return 2;
+  if (ratio <= 0.75) return 3;
+  return 4;
+}
+
+/** Month label position: first week index where that month appears */
+function getMonthLabelPositions(year: number, startDate: Date): { month: string; weekIndex: number }[] {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const result: { month: string; weekIndex: number }[] = [];
+  const startMs = startDate.getTime();
+  const oneWeek = 7 * 24 * 60 * 60 * 1000;
+  for (let m = 0; m < 12; m++) {
+    const firstDay = new Date(year, m, 1);
+    const daysFromStart = (firstDay.getTime() - startMs) / (24 * 60 * 60 * 1000);
+    const weekIndex = Math.max(0, Math.floor(daysFromStart / 7));
+    result.push({ month: months[m], weekIndex });
+  }
+  return result;
+}
+
+function formatTooltipDate(dateStr: string): string {
+  const d = new Date(dateStr + 'Z');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function contributionText(count: number): string {
+  if (count === 0) return 'No contributions';
+  if (count === 1) return '1 contribution';
+  return `${count} contributions`;
+}
 
 export const GitHubContributionGraph = memo(function GitHubContributionGraph() {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [contributionData, setContributionData] = useState<ContributionData | null>(null);
-  const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [data, setData] = useState<ContributionData | null>(null);
+  const [hovered, setHovered] = useState<{ day: ContributionDay; level: number; rect: DOMRect } | null>(null);
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
 
   const years = [currentYear, currentYear - 1, currentYear - 2, currentYear - 3];
 
   useEffect(() => {
-    const fetchContributionData = async () => {
+    let cancelled = false;
+    (async () => {
       try {
-        const data = await githubService.getContributionData(selectedYear);
-        const processedData = processContributionData(data.contributions, selectedYear);
-        setContributionData({
-          year: selectedYear,
-          totalContributions: data.totalContributions,
-          weeks: processedData.weeks
-        });
-      } catch (error) {
-        console.error('Error fetching contribution data:', error);
-        // Fallback to mock data if API fails
-        const mockData = generateMockContributionData(selectedYear);
-        setContributionData(mockData);
+        const api = await githubService.getContributionData(selectedYear);
+        const processed = processContributionData(api.contributions, selectedYear);
+        if (!cancelled) setData(processed);
+      } catch {
+        if (!cancelled) setData(generateMockContributionData(selectedYear));
       }
-    };
-
-    fetchContributionData();
+    })();
+    return () => { cancelled = true; };
   }, [selectedYear]);
 
-  if (!contributionData) {
+  const { maxCount, monthLabels } = useMemo(() => {
+    if (!data) return { maxCount: 0, monthLabels: [] as { month: string; weekIndex: number }[] };
+    let max = 0;
+    for (const week of data.weeks) {
+      for (const day of week) {
+        if (day.count > max) max = day.count;
+      }
+    }
+    const monthLabels = getMonthLabelPositions(data.year, data.startDate);
+    return { maxCount: max, monthLabels };
+  }, [data]);
+
+  if (!data) {
     return (
-      <div className="glass p-6 rounded-xl">
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-300 rounded w-1/4 mb-4"></div>
-          <div className="grid grid-cols-52 gap-1">
-            {Array.from({ length: 364 }).map((_, i) => (
-              <div key={i} className="w-3 h-3 bg-gray-200 rounded-sm"></div>
-            ))}
-          </div>
-        </div>
+      <div className="flex items-center justify-center py-12">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
       </div>
     );
   }
 
-  const getContributionColor = (level: number) => {
-    const colors = [
-      'bg-gray-100 dark:bg-gray-800', // level 0 - no contributions
-      'bg-green-100 dark:bg-green-900', // level 1
-      'bg-green-300 dark:bg-green-700', // level 2
-      'bg-green-500 dark:bg-green-500', // level 3
-      'bg-green-700 dark:bg-green-300', // level 4 - most contributions
-    ];
-    return colors[level] || colors[0];
-  };
-
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
   return (
-    <div>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <Calendar className="w-6 h-6 text-primary" />
-          <h3 className="text-xl font-semibold">Contribution Activity</h3>
-        </div>
-        <div className="text-sm text-muted-foreground">
-          {contributionData.totalContributions} contributions in {selectedYear}
+    <div className="w-full">
+      {/* Year selector — GitHub style: minimal */}
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex gap-1">
+          {years.map((y) => (
+            <button
+              key={y}
+              type="button"
+              onClick={() => setSelectedYear(y)}
+              className={`rounded px-2 py-1 text-xs font-medium transition-colors ${
+                selectedYear === y
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {y}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Year Selector */}
-      <div className="flex gap-2 mb-6">
-        {years.map((year) => (
-          <motion.button
-            key={year}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedYear(year)}
-            className={`px-3 py-1 rounded-lg text-sm font-medium transition-all ${
-              selectedYear === year
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary hover:bg-secondary/80 text-muted-foreground'
-            }`}
-          >
-            {year}
-          </motion.button>
-        ))}
-      </div>
-
-      {/* Contribution Graph */}
-      <div className="relative">
-        {/* Month labels */}
-        <div className="flex gap-1 mb-2 ml-8">
-          {months.map((month, index) => (
-            <div key={month} className="text-xs text-muted-foreground" style={{ width: '4.5rem' }}>
+      {/* Graph: GitHub layout — months on top, days on left, grid of squares */}
+      <div className="inline-block">
+        {/* Month labels row — positioned like GitHub */}
+        <div
+          className="relative mb-1 h-4 text-xs text-muted-foreground"
+          style={{ width: 28 + data.weeks.length * WEEK_WIDTH }}
+        >
+          {monthLabels.map(({ month, weekIndex }) => (
+            <span
+              key={month}
+              className="absolute top-0"
+              style={{ left: 28 + weekIndex * WEEK_WIDTH }}
+            >
               {month}
-            </div>
+            </span>
           ))}
         </div>
 
-        {/* Weekday labels and contribution grid */}
-        <div className="flex gap-1">
-          {/* Weekday labels */}
-          <div className="flex flex-col gap-1 mr-2">
-            {weekdays.map((day, index) => (
-              <div key={day} className="text-xs text-muted-foreground h-3 flex items-center justify-end pr-1">
-                {index % 2 === 0 ? day : ''}
-              </div>
-            ))}
+        <div className="flex">
+          {/* Day labels — Mon, Wed, Fri only like GitHub; 7 rows aligned with squares */}
+          <div
+            className="grid pr-1 text-xs text-muted-foreground"
+            style={{
+              width: 26,
+              gridTemplateRows: 'repeat(7, 1fr)',
+              height: 7 * (SQUARE_SIZE + SQUARE_GAP) - SQUARE_GAP,
+            }}
+          >
+            <span />
+            <span className="flex items-center">Mon</span>
+            <span />
+            <span className="flex items-center">Wed</span>
+            <span />
+            <span className="flex items-center">Fri</span>
+            <span />
           </div>
 
-          {/* Contribution grid */}
-          <div className="flex gap-1 overflow-x-auto">
-            {contributionData.weeks.map((week, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col gap-1">
-                {week.map((day, dayIndex) => (
-                  <motion.div
-                    key={`${weekIndex}-${dayIndex}`}
-                    className={`w-3 h-3 rounded-sm cursor-pointer transition-all hover:ring-2 hover:ring-primary/50 ${getContributionColor(day.level)}`}
-                    onMouseEnter={(e) => {
-                      setHoveredDay(day);
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      setTooltipPosition({ x: rect.left + rect.width / 2, y: rect.top });
-                    }}
-                    onMouseLeave={() => setHoveredDay(null)}
-                    whileHover={{ scale: 1.2 }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: (weekIndex * 7 + dayIndex) * 0.001 }}
-                  />
-                ))}
+          {/* Squares grid — each column is a week (7 rows: Sun–Sat) */}
+          <div className="flex" style={{ gap: SQUARE_GAP }}>
+            {data.weeks.map((week, wi) => (
+              <div
+                key={wi}
+                className="flex flex-col"
+                style={{ gap: SQUARE_GAP }}
+              >
+                {week.map((day, di) => {
+                  const level = getLevel(day.count, maxCount);
+                  return (
+                    <div
+                      key={`${wi}-${di}`}
+                      className="rounded-sm cursor-pointer transition-opacity hover:opacity-90"
+                      style={{
+                        width: SQUARE_SIZE,
+                        height: SQUARE_SIZE,
+                        backgroundColor: `var(--contrib-${level})`,
+                        outline: hovered?.day.date === day.date ? '2px solid' : undefined,
+                        outlineColor: hovered?.day.date === day.date ? 'hsl(var(--foreground))' : undefined,
+                        outlineOffset: 1,
+                      }}
+                      onMouseEnter={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        setHovered({ day, level, rect });
+                        setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top });
+                      }}
+                      onMouseLeave={() => {
+                        setHovered(null);
+                        setTooltipPos(null);
+                      }}
+                      role="img"
+                      aria-label={`${day.date}: ${contributionText(day.count)}`}
+                    />
+                  );
+                })}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Tooltip */}
-        {hoveredDay && (
-          <ContributionTooltip day={hoveredDay} visible={true} />
+        {/* Tooltip — GitHub style: above cell, "X contributions" / "No contributions" + date */}
+        {hovered && tooltipPos && (
+          <div
+            className="fixed z-50 pointer-events-none -translate-x-1/2 -translate-y-full"
+            style={{
+              left: tooltipPos.x,
+              top: tooltipPos.y - 8,
+            }}
+          >
+            <div className="rounded border border-border bg-popover px-3 py-2 text-center shadow-md">
+              <p className="text-sm font-semibold text-foreground whitespace-nowrap">
+                {contributionText(hovered.day.count)}
+              </p>
+              <p className="text-xs text-muted-foreground whitespace-nowrap">
+                {formatTooltipDate(hovered.day.date)}
+              </p>
+            </div>
+          </div>
         )}
       </div>
 
-      {/* Legend */}
-      <div className="flex items-center justify-between mt-6">
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground">Less</span>
-          <div className="flex gap-1">
-            {[0, 1, 2, 3, 4].map((level) => (
-              <div
-                key={level}
-                className={`w-3 h-3 rounded-sm ${getContributionColor(level)}`}
-              />
-            ))}
-          </div>
-          <span className="text-xs text-muted-foreground">More</span>
+      {/* Legend — GitHub: "Less" [5 squares] "More" */}
+      <div className="mt-4 flex items-center justify-end gap-2">
+        <span className="text-xs text-muted-foreground">Less</span>
+        <div className="flex" style={{ gap: SQUARE_GAP }}>
+          {[0, 1, 2, 3, 4].map((level) => (
+            <div
+              key={level}
+              className="rounded-sm"
+              style={{
+                width: SQUARE_SIZE,
+                height: SQUARE_SIZE,
+                backgroundColor: `var(--contrib-${level})`,
+              }}
+            />
+          ))}
         </div>
-        <div className="text-xs text-muted-foreground">
-          Powered by GitHub
-        </div>
+        <span className="text-xs text-muted-foreground">More</span>
       </div>
     </div>
   );

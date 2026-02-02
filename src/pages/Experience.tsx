@@ -55,8 +55,16 @@ const Experience = () => {
                           isLeft ? 'md:justify-start' : ''
                         }`}
                       >
-                        <div className="p-3 rounded-xl bg-primary/10 text-primary shrink-0">
-                          <Briefcase className="w-6 h-6" />
+                        <div className="w-14 h-14 rounded-xl bg-muted/50 border border-border flex items-center justify-center shrink-0 overflow-hidden">
+                          {exp.logo ? (
+                            <img
+                              src={`/assets/logo/${exp.logo}`}
+                              alt={exp.company}
+                              className="w-9 h-9 object-contain"
+                            />
+                          ) : (
+                            <Briefcase className="w-6 h-6 text-primary" />
+                          )}
                         </div>
                         <div className={isLeft ? 'md:text-left' : ''}>
                           <h3 className="heading-4 text-xl">{exp.role}</h3>

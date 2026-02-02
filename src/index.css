@@ -60,6 +60,12 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 192 91% 50%;
+    /* GitHub contribution graph colors (light) */
+    --contrib-0: #ebedf0;
+    --contrib-1: #9be9a8;
+    --contrib-2: #40c463;
+    --contrib-3: #30a14e;
+    --contrib-4: #216e39;
   }
 
   .dark {
@@ -112,6 +118,12 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 192 91% 50%;
+    /* GitHub contribution graph colors (dark) */
+    --contrib-0: #161b22;
+    --contrib-1: #0e4429;
+    --contrib-2: #006d32;
+    --contrib-3: #26a641;
+    --contrib-4: #39d353;
   }
 }
 

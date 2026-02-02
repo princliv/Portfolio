@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { MagneticButton } from '@/components/ui/MagneticButton';
-import { Send, Github, Linkedin, Twitter, Mail, MapPin, Download, CheckCircle, AlertCircle } from 'lucide-react';
+import { toast } from '@/components/ui/sonner';
+import { Send, Github, Linkedin, Twitter, Mail, MapPin, Download } from 'lucide-react';
 import contactData from '@/data/contact.json';
-import { sendEmail, sendEmailFallback } from '@/lib/emailService';
+import { sendEmail, sendEmailFallback, isEmailConfigured, initializeEmailJS } from '@/lib/emailService';
 
 const iconMap = {
   github: Github,
@@ -27,30 +28,28 @@ const Contact = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    initializeEmailJS();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitError(null);
-    
+
     try {
-      // Try to send email using EmailJS (if configured)
-      // For now, we'll use the fallback function
-      const result = await sendEmailFallback(formState);
-      
+      const result = isEmailConfigured()
+        ? await sendEmail(formState)
+        : await sendEmailFallback(formState);
+
       if (result.success) {
-        setIsSubmitted(true);
         setFormState({ name: '', email: '', subject: '', message: '' });
-        
-        // Reset success message after 5 seconds
-        setTimeout(() => setIsSubmitted(false), 5000);
+        toast.success("Message sent successfully! I'll get back to you soon.");
       } else {
-        setSubmitError(result.message);
+        toast.error(result.message);
       }
     } catch (error) {
-      setSubmitError('An unexpected error occurred. Please try again.');
+      toast.error('An unexpected error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -138,28 +137,6 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="card-premium">
                 <h3 className="heading-4 text-xl mb-6">Send a Message</h3>
 
-                {isSubmitted && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 p-4 mb-6 rounded-xl bg-green-500/10 text-green-500"
-                  >
-                    <CheckCircle className="w-5 h-5" />
-                    <span>Message sent successfully! I'll get back to you soon.</span>
-                  </motion.div>
-                )}
-
-                {submitError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 p-4 mb-6 rounded-xl bg-red-500/10 text-red-500"
-                  >
-                    <AlertCircle className="w-5 h-5" />
-                    <span>{submitError}</span>
-                  </motion.div>
-                )}
-
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
@@ -177,6 +154,7 @@ const Contact = () => {
                         placeholder="John Doe"
                       />
                     </div>
+
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium mb-2">
                         Email
@@ -230,29 +208,36 @@ const Contact = () => {
                     />
                   </div>
 
-                  <MagneticButton className="btn-primary w-full justify-center" onClick={() => {}}>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="flex items-center gap-2 w-full justify-center"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                            className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"
-                          />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-5 h-5" />
-                          Send Message
-                        </>
-                      )}
-                    </button>
-                  </MagneticButton>
+                  {/* Submit Button (MagneticButton removed) */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="
+                      w-full flex items-center justify-center gap-2
+                      px-6 py-3 rounded-xl
+                      bg-primary text-primary-foreground
+                      transition-all duration-300 ease-out
+                      hover:bg-primary/90 hover:scale-[1.02]
+                      active:scale-[0.98]
+                      disabled:opacity-60 disabled:cursor-not-allowed
+                    "
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                          className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"
+                        />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        Send Message
+                      </>
+                    )}
+                  </button>
                 </div>
               </form>
             </motion.div>
