@@ -104,9 +104,15 @@ export const handler: Handler = async (event: HandlerEvent, _context: HandlerCon
   const paramsToOwner = buildParamsToOwner(ownerEmail, data);
   const result1 = await sendEmailJS(serviceId, templateId, userId, paramsToOwner);
   if (!result1.ok) {
+    const isNonBrowserDisabled =
+      result1.text?.toLowerCase().includes('non-browser') ||
+      result1.text?.toLowerCase().includes('disabled for non-browser');
+    const message = isNonBrowserDisabled
+      ? 'EmailJS blocks server-side API calls by default. In EmailJS Dashboard go to Account → Security and enable "API calls for non-browser applications", then try again.'
+      : result1.text || 'Failed to send email';
     return {
       statusCode: 500,
-      body: JSON.stringify({ success: false, message: result1.text || 'Failed to send email' }),
+      body: JSON.stringify({ success: false, message }),
     };
   }
 
