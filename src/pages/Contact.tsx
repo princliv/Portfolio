@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/ui/SectionHeader';
@@ -6,7 +6,7 @@ import { MagneticButton } from '@/components/ui/MagneticButton';
 import { toast } from '@/components/ui/sonner';
 import { Send, Github, Linkedin, Twitter, Mail, MapPin, Download } from 'lucide-react';
 import contactData from '@/data/contact.json';
-import { sendEmail } from '@/lib/emailService';
+import { sendEmail, sendEmailFallback, isEmailConfigured, initializeEmailJS } from '@/lib/emailService';
 
 const iconMap = {
   github: Github,
@@ -29,12 +29,18 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    initializeEmailJS();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const result = await sendEmail(formState);
+      const result = isEmailConfigured()
+        ? await sendEmail(formState)
+        : await sendEmailFallback(formState);
 
       if (result.success) {
         setFormState({ name: '', email: '', subject: '', message: '' });
