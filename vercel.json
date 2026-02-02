@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/experience", "destination": "/index.html" },
+    { "source": "/projects", "destination": "/index.html" },
+    { "source": "/skills", "destination": "/index.html" },
+    { "source": "/education", "destination": "/index.html" },
+    { "source": "/achievements", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
