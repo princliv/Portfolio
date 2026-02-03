@@ -21,7 +21,40 @@ const marqueeImages = [
   '/assets/about-marquee/34.png',
 ];
 
+const MARQUEE_HEIGHT = 280;
+const CARD_MIN_WIDTH = 200;
+
 /* ---------------- COMPONENT ---------------- */
+
+function MarqueeTrack({ images, trackId }: { images: string[]; trackId: string }) {
+  return (
+    <div
+      className="marquee-track flex flex-shrink-0 items-center gap-4"
+      style={{ height: MARQUEE_HEIGHT }}
+      aria-hidden={trackId === 'copy'}
+    >
+      {images.map((src, i) => (
+        <div
+          key={`${trackId}-${i}`}
+          className="flex flex-shrink-0 items-center justify-center rounded-lg border border-border/40 bg-muted/30 overflow-hidden"
+          style={{
+            minWidth: CARD_MIN_WIDTH,
+            height: MARQUEE_HEIGHT - 24,
+            padding: 4,
+          }}
+        >
+          <img
+            src={src}
+            alt={`Marquee ${i + 1}`}
+            loading="lazy"
+            className="h-full w-full object-contain"
+            draggable={false}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function TechMarquee() {
   return (
@@ -36,43 +69,11 @@ export function TechMarquee() {
       <div className="absolute left-0 top-0 bottom-0 w-40 md:w-56 lg:w-72 z-10 pointer-events-none bg-gradient-to-r from-background via-background/80 to-transparent" />
       <div className="absolute right-0 top-0 bottom-0 w-40 md:w-56 lg:w-72 z-10 pointer-events-none bg-gradient-to-l from-background via-background/80 to-transparent" />
 
-      {/* Marquee wrapper */}
-      <div className="group/marquee overflow-hidden whitespace-nowrap">
-        <div
-          className="inline-flex items-center gap-2 marquee-content"
-          style={{
-            height: '350px',
-          }}
-        >
-          {/* First set */}
-          {marqueeImages.map((src, i) => (
-            <div key={`first-${i}`} className="inline-flex flex-shrink-0 h-full items-center px-2">
-              <img
-                src={src}
-                alt={`Tech showcase ${i + 1}`}
-                loading="lazy"
-                className="h-full w-auto object-contain"
-                draggable="false"
-              />
-            </div>
-          ))}
-
-          {/* Second set - exact duplicate for seamless loop */}
-          {marqueeImages.map((src, i) => (
-            <div
-              key={`second-${i}`}
-              className="inline-flex flex-shrink-0 h-full items-center px-2"
-              aria-hidden="true"
-            >
-              <img
-                src={src}
-                alt=""
-                loading="lazy"
-                className="h-full w-auto object-contain"
-                draggable="false"
-              />
-            </div>
-          ))}
+      {/* Marquee: two identical tracks so -50% = one full loop */}
+      <div className="marquee-wrapper overflow-hidden cursor-default py-3">
+        <div className="marquee-content flex flex-nowrap w-max">
+          <MarqueeTrack images={marqueeImages} trackId="original" />
+          <MarqueeTrack images={marqueeImages} trackId="copy" />
         </div>
       </div>
     </motion.div>

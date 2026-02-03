@@ -350,27 +350,26 @@
                 transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Marquee scroll animation - ensures seamless looping through all images */
+  /* Marquee: two identical tracks, -50% = one track width = seamless loop */
   @keyframes marquee-scroll {
-    from {
+    0% {
       transform: translateX(0);
     }
-    to {
+    100% {
       transform: translateX(-50%);
     }
   }
-  
-  /* Ensure smooth marquee animation */
+
   .marquee-content {
-    animation: marquee-scroll 18s linear infinite;
+    display: flex;
+    flex-wrap: nowrap;
+    animation: marquee-scroll 40s linear infinite;
     will-change: transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
   }
-  
-  .marquee-content:hover {
+
+  .marquee-wrapper:hover .marquee-content {
     animation-play-state: paused;
   }
 
