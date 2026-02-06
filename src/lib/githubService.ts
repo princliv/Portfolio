@@ -11,11 +11,12 @@ interface GitHubUser {
 interface GitHubRepo {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   stargazers_count: number;
   forks_count: number;
-  language: string;
+  language: string | null;
   html_url: string;
+  homepage: string | null;
   updated_at: string;
   topics: string[];
   fork: boolean;
@@ -132,6 +133,40 @@ export const githubService = {
       return reposWithCommits;
     } catch (error) {
       console.error('Error fetching repositories:', error);
+      throw error;
+    }
+  },
+
+  async getRepoReadme(repoName: string): Promise<string> {
+    try {
+      const response = await fetch(
+        `https://api.github.com/repos/${USERNAME}/${repoName}/readme`,
+        {
+          headers: {
+            ...headers,
+            Accept: 'application/vnd.github.v3.html',
+          },
+        }
+      );
+
+      if (response.status === 403) {
+        const rateLimitReset = response.headers.get('X-RateLimit-Reset');
+        const resetTime = rateLimitReset ? new Date(parseInt(rateLimitReset) * 1000).toLocaleTimeString() : 'unknown';
+        throw new RateLimitError(`GitHub API rate limit exceeded while loading README. Resets at ${resetTime}`);
+      }
+
+      if (response.status === 404) {
+        // No README is fine – return a friendly message
+        return '<p class=\"text-sm text-muted-foreground\">No README available for this repository yet.</p>';
+      }
+
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      }
+
+      return await response.text();
+    } catch (error) {
+      console.error(`Error fetching README for ${repoName}:`, error);
       throw error;
     }
   },

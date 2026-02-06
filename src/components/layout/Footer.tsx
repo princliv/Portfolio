@@ -14,7 +14,7 @@ const socialLinks = [
 export function Footer() {
   const { resolvedTheme } = useTheme();
   return (
-    <footer className="relative z-20 glass py-12 border-t border-border/40 overflow-hidden">
+    <footer className="relative z-20 glass py-12 border-t border-border/40 overflow-hidden px-4 sm:px-6 md:px-8">
       {/* Cosmic glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-primary/5 blur-3xl opacity-50" />
       

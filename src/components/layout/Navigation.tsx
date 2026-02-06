@@ -50,7 +50,7 @@ export function Navigation() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 px-4 sm:px-6 md:px-8 ${
           isScrolled ? 'glass py-4 shadow-lg' : 'py-6'
         }`}
       >
