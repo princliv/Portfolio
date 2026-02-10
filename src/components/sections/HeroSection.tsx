@@ -296,20 +296,14 @@ export const HeroSection = memo(function HeroSection() {
       {/* LAYER 2: ABOUT ME (The Visionary) - Desktop Only */}
       <div
         ref={designLayerRef}
-        className="hidden lg:block absolute top-0 left-0 w-full h-full z-[5] translate-x-full will-change-transform"
-        style={{
-          background: 'rgba(10, 10, 10, 0.85)',
-          backdropFilter: 'blur(20px)',
-          borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '-50px 0 150px rgba(0, 0, 0, 1)',
-        }}
+        className="hidden lg:block absolute top-0 left-0 w-full h-full z-[5] translate-x-full will-change-transform bg-background/95 backdrop-blur-xl border-l border-border shadow-2xl"
       >
         {/* Animated Gradient Blob */}
         <div
-          className="absolute top-1/2 -right-[20%] w-[80vh] h-[80vh] -translate-y-1/2 rounded-full -z-10"
+          className="absolute top-1/2 -right-[20%] w-[80vh] h-[80vh] -translate-y-1/2 rounded-full -z-10 opacity-30 dark:opacity-40"
           style={{
             background:
-              'radial-gradient(circle, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.2), transparent 70%)',
+              'radial-gradient(circle, hsl(var(--primary) / 0.6), hsl(var(--primary) / 0.3), transparent 70%)',
             filter: 'blur(80px)',
             animation: 'blob-pulse 10s infinite alternate',
           }}
@@ -326,7 +320,7 @@ export const HeroSection = memo(function HeroSection() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-block mb-6 font-mono text-sm text-[#3b82f6] tracking-[0.15em] uppercase"
+                className="inline-block mb-6 font-mono text-sm text-primary tracking-[0.15em] uppercase"
               >
                 ━━ About Me
               </motion.div>
@@ -335,21 +329,21 @@ export const HeroSection = memo(function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-[1.1] mb-6 text-white tracking-tight"
+                className="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-[1.1] mb-6 text-foreground tracking-tight"
               >
                 Crafting Digital <br />
                 <span className="relative inline-block">
-                  <span className="font-['Times_New_Roman',serif] italic font-light text-transparent bg-clip-text bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6]">
+                  <span className="font-['Times_New_Roman',serif] italic font-light gradient-text">
                     Excellence
                   </span>
                   <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 200 10" preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="underlineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
-                        <stop offset="50%" stopColor="#8b5cf6" stopOpacity="1" />
-                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                        <stop offset="0%" className="[stop-color:hsl(var(--primary))]" stopOpacity="0.6" />
+                        <stop offset="50%" className="[stop-color:hsl(var(--primary))]" stopOpacity="1" />
+                        <stop offset="100%" className="[stop-color:hsl(var(--primary))]" stopOpacity="0.6" />
                       </linearGradient>
-                      <filter id="glow">
+                      <filter id="glowUnderline">
                         <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
                         <feMerge>
                           <feMergeNode in="coloredBlur"/>
@@ -360,28 +354,28 @@ export const HeroSection = memo(function HeroSection() {
                     
                     {/* Glow layer */}
                     <motion.path
-                      d="M0,5 C50,1 80,1 100,5 C120,9 150,9 200,5"
+                      d="M0,5 C50,2 80,2 100,5 C120,8 150,8 200,5"
                       stroke="url(#underlineGradient)"
-                      strokeWidth="5"
+                      strokeWidth="4"
                       strokeLinecap="round"
                       fill="none"
-                      opacity="0.25"
-                      filter="url(#glow)"
+                      opacity="0.3"
+                      filter="url(#glowUnderline)"
                       initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 0.25 }}
-                      transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
+                      animate={{ pathLength: 1, opacity: 0.3 }}
+                      transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     />
                     
                     {/* Main smooth wave */}
                     <motion.path
-                      d="M0,5 C50,1 80,1 100,5 C120,9 150,9 200,5"
+                      d="M0,5 C50,2 80,2 100,5 C120,8 150,8 200,5"
                       stroke="url(#underlineGradient)"
                       strokeWidth="2"
                       strokeLinecap="round"
                       fill="none"
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
-                      transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
+                      transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     />
                   </svg>
                 </span>
@@ -393,7 +387,7 @@ export const HeroSection = memo(function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base xl:text-lg text-zinc-300 leading-relaxed mb-8"
+                className="text-base xl:text-lg text-muted-foreground leading-relaxed mb-8"
               >
                 A full-stack engineer specializing in building intelligent, scalable systems that merge 
                 cutting-edge technology with intuitive design. From AI-driven solutions to seamless user 
@@ -408,9 +402,9 @@ export const HeroSection = memo(function HeroSection() {
                 className="grid grid-cols-3 gap-4 mb-8"
               >
                 {[
-                  { value: '1+', label: 'Years', color: '#3b82f6' },
-                  { value: '10+', label: 'Projects', color: '#8b5cf6' },
-                  { value: '40+', label: 'Certificates', color: '#06b6d4' },
+                  { value: '3+', label: 'Years' },
+                  { value: '25+', label: 'Projects' },
+                  { value: '40+', label: 'Certificates' },
                 ].map((stat, i) => (
                   <motion.div
                     key={stat.label}
@@ -419,15 +413,12 @@ export const HeroSection = memo(function HeroSection() {
                     transition={{ delay: 0.6 + i * 0.1 }}
                     className="relative group"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative p-4 rounded-xl border border-white/10 backdrop-blur-sm">
-                      <div
-                        className="text-2xl xl:text-3xl font-bold mb-1"
-                        style={{ color: stat.color }}
-                      >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative p-4 rounded-xl border border-border backdrop-blur-sm bg-card/50">
+                      <div className="text-2xl xl:text-3xl font-bold mb-1 text-primary">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-zinc-400 uppercase tracking-wide">
+                      <div className="text-xs text-muted-foreground uppercase tracking-wide">
                         {stat.label}
                       </div>
                     </div>
@@ -482,12 +473,12 @@ export const HeroSection = memo(function HeroSection() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.8 + i * 0.1 }}
-                    className="flex items-start gap-4 p-5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/5 hover:border-[#3b82f6]/30 hover:bg-white/10 transition-all group"
+                    className="flex items-start gap-4 p-5 rounded-xl bg-card/40 backdrop-blur-sm border border-border hover:border-primary/30 hover:bg-card/60 transition-all group"
                   >
                     <span className="text-3xl group-hover:scale-110 transition-transform flex-shrink-0">{item.icon}</span>
                     <div>
-                      <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
-                      <p className="text-sm text-zinc-400 leading-relaxed">{item.desc}</p>
+                      <h3 className="text-base font-semibold text-foreground mb-2">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -498,11 +489,11 @@ export const HeroSection = memo(function HeroSection() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.4 }}
-                className="mt-6 p-4 rounded-xl bg-gradient-to-r from-[#3b82f6]/10 to-[#8b5cf6]/10 border border-[#3b82f6]/20"
+                className="mt-6 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20"
               >
                 <div className="flex items-center gap-3 text-sm">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-white font-medium">Available for freelance & full-time opportunities</span>
+                  <span className="text-foreground font-medium">Available for freelance & full-time opportunities</span>
                 </div>
               </motion.div>
             </div>
