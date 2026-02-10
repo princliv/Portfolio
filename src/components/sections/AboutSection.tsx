@@ -123,7 +123,7 @@ export const AboutSection = function AboutSection() {
   return (
     <section
       className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 rounded-t-[3rem] md:rounded-t-[4rem] lg:rounded-t-[5rem] bg-background/95 backdrop-blur-xl border-t border-border/40 shadow-2xl"
-      style={{ marginTop: '100vh' }}
+      style={{ marginTop: '5vh' }}
     >
       <div className="container-custom">
         <SectionHeader
