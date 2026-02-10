@@ -127,7 +127,7 @@ export const AboutSection = function AboutSection() {
     >
       <div className="container-custom">
         <SectionHeader
-          eyebrow="About Me"
+          eyebrow="Skills"
           title="Engineering Scalable, Intelligent & Impactful Products"
           description="Software Developer specializing in full-stack systems, mobile apps, AI-driven solutions, analytics, cloud platforms, and refined UI/UX."
         />

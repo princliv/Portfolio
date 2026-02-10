@@ -342,22 +342,47 @@ export const HeroSection = memo(function HeroSection() {
                   <span className="font-['Times_New_Roman',serif] italic font-light text-transparent bg-clip-text bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6]">
                     Excellence
                   </span>
-                  <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8">
+                  <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 200 10" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="underlineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
+                        <stop offset="50%" stopColor="#8b5cf6" stopOpacity="1" />
+                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                      </linearGradient>
+                      <filter id="glow">
+                        <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    
+                    {/* Glow layer */}
                     <motion.path
-                      d="M0,4 Q50,0 100,4 T200,4"
-                      stroke="url(#gradient)"
+                      d="M0,5 C50,1 80,1 100,5 C120,9 150,9 200,5"
+                      stroke="url(#underlineGradient)"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      fill="none"
+                      opacity="0.25"
+                      filter="url(#glow)"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.25 }}
+                      transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
+                    />
+                    
+                    {/* Main smooth wave */}
+                    <motion.path
+                      d="M0,5 C50,1 80,1 100,5 C120,9 150,9 200,5"
+                      stroke="url(#underlineGradient)"
                       strokeWidth="2"
+                      strokeLinecap="round"
                       fill="none"
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
-                      transition={{ delay: 0.5, duration: 1 }}
+                      transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
                     />
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#3b82f6" />
-                        <stop offset="100%" stopColor="#8b5cf6" />
-                      </linearGradient>
-                    </defs>
                   </svg>
                 </span>
                 <br />
