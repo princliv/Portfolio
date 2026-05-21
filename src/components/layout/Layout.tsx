@@ -9,9 +9,6 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   useEffect(() => {
-    // Smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
     // Add parallax effect on scroll
     const handleScroll = () => {
       const scrolled = window.pageYOffset;
@@ -50,7 +47,7 @@ export function Layout({ children }: LayoutProps) {
       </div>
       
       <Navigation />
-      <main className="flex-1 relative z-10 px-4 sm:px-6 md:px-8">{children}</main>
+      <main className="flex-1 relative z-10 px-4 sm:px-6 lg:px-4">{children}</main>
       <Footer />
     </div>
   );

@@ -1,0 +1,114 @@
+{
+  "header": {
+    "eyebrow": "Ecosystem",
+    "title": "Developer Profiles & Learning Networks",
+    "description": "Explore my certified credentials, learning pathways, coding achievements, and hackathon ranks across leading global developer ecosystems."
+  },
+  "profiles": [
+    {
+      "id": "google",
+      "name": "Google for Developers",
+      "url": "https://g.dev/princliv",
+      "username": "@princliv",
+      "description": "Official developer hub tracking verified badges, Android development studies, and Firebase cloud services mastery.",
+      "color": "#4285F4",
+      "secondaryColor": "#EA4335",
+      "gradient": "linear-gradient(135deg, #4285F4 0%, #EA4335 30%, #FBBC05 70%, #34A853 100%)",
+      "glowColor": "rgba(66, 133, 244, 0.2)",
+      "metrics": [
+        { "label": "Badges Earned", "value": "15+" },
+        { "label": "Focus Area", "value": "Android / Firebase" },
+        { "label": "Level", "value": "Explorer" }
+      ],
+      "highlights": [
+        "Android Basics in Kotlin",
+        "Firebase Cloud Integration",
+        "Google Workspace Developer"
+      ]
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/users/princliv/",
+      "username": "@princliv",
+      "description": "Cloud architectures learning path, Azure service configurations, AI fundamentals, and developer environment certifications.",
+      "color": "#00A4E4",
+      "secondaryColor": "#7FBA00",
+      "gradient": "linear-gradient(135deg, #00A4E4 0%, #7FBA00 100%)",
+      "glowColor": "rgba(0, 164, 239, 0.2)",
+      "metrics": [
+        { "label": "XP Gained", "value": "12,000+" },
+        { "label": "Modules Completed", "value": "24+" },
+        { "label": "Learning Trophies", "value": "3" }
+      ],
+      "highlights": [
+        "Azure Cloud Fundamentals",
+        "AI & Machine Learning Paths",
+        "GitHub Actions Workflows"
+      ]
+    },
+    {
+      "id": "credly",
+      "name": "Credly",
+      "url": "https://www.credly.com/users/princliv",
+      "username": "@princliv",
+      "description": "Digital credential wallet containing verified technical certificates from IBM, Google, and national agencies.",
+      "color": "#FF5F00",
+      "secondaryColor": "#FF8800",
+      "gradient": "linear-gradient(135deg, #FF5F00 0%, #FF8800 100%)",
+      "glowColor": "rgba(255, 95, 0, 0.2)",
+      "metrics": [
+        { "label": "Verified Badges", "value": "10+" },
+        { "label": "Platform Scope", "value": "Global Certificates" },
+        { "label": "Issuer Network", "value": "IBM / Google / AICTE" }
+      ],
+      "highlights": [
+        "IBM Cybersecurity Specialist",
+        "Google Android Developer",
+        "AICTE Verified Internships"
+      ]
+    },
+    {
+      "id": "unstop",
+      "name": "Unstop",
+      "url": "https://unstop.com/u/princliv",
+      "username": "@princliv",
+      "description": "Hackathon registrations, coding competitions, national contests, and developer team projects listings.",
+      "color": "#1D9BF0",
+      "secondaryColor": "#00C6FF",
+      "gradient": "linear-gradient(135deg, #1D9BF0 0%, #00C6FF 100%)",
+      "glowColor": "rgba(29, 161, 242, 0.2)",
+      "metrics": [
+        { "label": "Hackathon Ranks", "value": "Top 1%" },
+        { "label": "Competitions Joined", "value": "15+" },
+        { "label": "State Trophies", "value": "UTKARSH 2nd Place" }
+      ],
+      "highlights": [
+        "2nd Place UTKARSH State Hackathon",
+        "TechSangram Runner Up",
+        "Corporate Engineering Contests"
+      ]
+    },
+    {
+      "id": "leetcode",
+      "name": "LeetCode",
+      "url": "https://leetcode.com/u/princliv/",
+      "username": "@princliv",
+      "description": "Algorithmic challenges, data structures solving, and logic practice in Java and C++.",
+      "color": "#FFA116",
+      "secondaryColor": "#FF2D55",
+      "gradient": "linear-gradient(135deg, #FFA116 0%, #FF2D55 100%)",
+      "glowColor": "rgba(255, 161, 22, 0.2)",
+      "metrics": [
+        { "label": "Problems Solved", "value": "200+" },
+        { "label": "Primary Languages", "value": "Java / C++" },
+        { "label": "Contest Status", "value": "Active" }
+      ],
+      "highlights": [
+        "Data Structures Mastered",
+        "Dynamic Programming Basics",
+        "Database SQL & Query Puzzles"
+      ]
+    }
+  ]
+}

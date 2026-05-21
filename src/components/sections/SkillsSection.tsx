@@ -226,8 +226,8 @@ function SkillPill({
       }}
       onMouseEnter={() => setHovered(true)}
       tabIndex={0}
-      className={`relative min-w-[180px] md:min-w-[220px] flex items-center gap-3 rounded-2xl px-4 py-3 bg-card/60 border backdrop-blur-md transition-colors ${
-        hovered ? 'border-primary' : 'border-border'
+      className={`relative min-w-[180px] md:min-w-[220px] flex items-center gap-3 rounded-2xl px-4 py-3 bg-card/60 border backdrop-blur-md transition-all duration-300 ${
+        hovered ? 'border-primary shadow-lg shadow-primary/10' : 'border-border shadow-sm'
       }`}
     >
       <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">

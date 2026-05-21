@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 
 export const ContactSection = memo(function ContactSection() {
   return (
-    <section className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 bg-background/95 backdrop-blur-xl border-t border-border/40 shadow-2xl">
+    <section className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 bg-[#eef2ff] dark:bg-background/95 border-t border-slate-200/80 dark:border-border/40 shadow-2xl">
       <div className="container-custom">
         <div
-          className="relative overflow-hidden rounded-3xl p-12 md:p-16 lg:p-20 text-center"
+          className="relative overflow-hidden rounded-3xl p-12 md:p-16 lg:p-20 text-center border border-slate-200/50 dark:border-white/5 bg-white/60 dark:bg-[#0b0b0e]/30 backdrop-blur-xl"
           style={{
-            background: 'linear-gradient(135deg, hsl(192, 91%, 50%, 0.1), hsl(280, 87%, 65%, 0.1))',
+            background: 'linear-gradient(135deg, hsl(192, 91%, 50%, 0.05), hsl(280, 87%, 65%, 0.05))',
           }}
         >
           {/* Background Glow */}
@@ -24,16 +24,16 @@ export const ContactSection = memo(function ContactSection() {
           
           <div className="relative z-10">
             <span
-              className="inline-block text-sm font-medium text-primary uppercase tracking-widest mb-4"
+              className="inline-block text-sm font-medium text-blue-600 dark:text-primary uppercase tracking-widest mb-4"
             >
               Let's Connect
             </span>
             
-            <h2 className="heading-2 mb-6">
+            <h2 className="heading-2 text-blue-950 dark:text-foreground mb-6">
               Have a Project in Mind?
             </h2>
             
-            <p className="body-large text-muted-foreground max-w-2xl mx-auto mb-10">
+            <p className="body-large text-slate-600 dark:text-muted-foreground max-w-2xl mx-auto mb-10">
               I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Let's create something amazing together.
             </p>
 

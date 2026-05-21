@@ -122,7 +122,7 @@ const highlights = [
 export const AboutSection = function AboutSection() {
   return (
     <section
-      className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 rounded-t-[3rem] md:rounded-t-[4rem] lg:rounded-t-[5rem] bg-background/95 backdrop-blur-xl border-t border-border/40 shadow-2xl"
+      className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 rounded-t-[3rem] md:rounded-t-[4rem] lg:rounded-t-[5rem] bg-[#f5f5f7] dark:bg-background/95 backdrop-blur-xl border-t border-border/40 shadow-2xl"
       style={{ marginTop: '5vh' }}
     >
       <div className="container-custom">
@@ -147,7 +147,7 @@ export const AboutSection = function AboutSection() {
               className="
                 group relative rounded-2xl
                 border border-border/40
-                bg-background/70 backdrop-blur-xl
+                bg-white/75 dark:bg-background/70 backdrop-blur-xl
                 p-6 shadow-lg
                 hover:shadow-2xl hover:-translate-y-1
                 transition-all duration-300
@@ -157,33 +157,33 @@ export const AboutSection = function AboutSection() {
               {/* Cosmic glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/10 group-hover:to-primary/5 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
-              {/* Header */}
-              <div className="flex items-start gap-4 mb-4">
-                <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <item.icon className="w-6 h-6" />
+                {/* Header */}
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <item.icon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="heading-4 text-lg mb-1 text-slate-900 dark:text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-slate-600 dark:text-muted-foreground text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="heading-4 text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
 
-              {/* Tools */}
-              <div className="flex flex-wrap gap-3 mt-5">
-                {item.tools.map((src, i) => (
-                  <img
-                    key={i}
-                    src={src}
-                    alt="tech"
-                    loading="lazy"
-                    className="w-8 h-8 object-contain opacity-80 group-hover:opacity-100 transition-opacity hover:scale-110 hover:rotate-3 transition-transform duration-200"
-                  />
-                ))}
-              </div>
+                {/* Tools */}
+                <div className="flex flex-wrap gap-3 mt-5">
+                  {item.tools.map((src, i) => (
+                    <img
+                      key={i}
+                      src={src}
+                      alt="tech"
+                      loading="lazy"
+                      className="w-8 h-8 object-contain opacity-80 group-hover:opacity-100 transition-opacity hover:scale-110 hover:rotate-3 transition-transform duration-200"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           ))}
@@ -193,16 +193,16 @@ export const AboutSection = function AboutSection() {
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { value: 1, suffix: '+', label: 'Years Professional Experience' },
-            { value: 10, suffix: '+', label: 'Projects & Deployments' },
+            { value: 15, suffix: '+', label: 'Projects & Deployments' },
             { value: 40, suffix: '+', label: 'Certifications Earned' },
-            { value: 3, suffix: '+', label: 'Major Awards & Recognitions' },
+            { value: 5, suffix: '+', label: 'Major Awards & Recognitions' },
           ].map((stat, i) => {
-            const { count, ref } = useCountUp({ 
-              end: stat.value, 
+            const { count, ref } = useCountUp({
+              end: stat.value,
               suffix: stat.suffix,
-              duration: 2000 
+              duration: 2000
             });
-            
+
             return (
               <div
                 key={stat.label}
@@ -215,7 +215,7 @@ export const AboutSection = function AboutSection() {
                     className="absolute -inset-4 bg-primary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
                 </div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-slate-600 dark:text-muted-foreground font-medium">
                   {stat.label}
                 </div>
               </div>

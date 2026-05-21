@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AnimatedText } from '@/components/ui/AnimatedText';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { HeroBackground } from '@/components/three/HeroBackground';
+import { InteractiveTimeline } from '@/components/ui/InteractiveTimeline';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,81 +24,86 @@ export const HeroSection = memo(function HeroSection() {
   const designContentRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (!sectionRef.current || window.innerWidth < 1024) return; // Only on desktop
+    const mm = gsap.matchMedia();
 
-    const ctx = gsap.context(() => {
+    mm.add("(min-width: 1024px)", () => {
+      if (!sectionRef.current) return;
+
+      // Set initial state of design layer
+      gsap.set(designLayerRef.current, { xPercent: 100 });
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=800', // Shorter scroll distance for quicker reveal
-          scrub: 0.5, // Smoother scrub value
+          end: '+=1100', // Relaxed scroll distance for a smoother transition
+          scrub: 1.2, // Liquid-smooth scrolling scrub
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      // 1. Hero content fades back with smooth ease
+      // 1. Hero content slides left and fades out linearly
       tl.to(
         heroContentRef.current,
         {
-          x: -120,
-          opacity: 0.2,
+          xPercent: -20,
+          opacity: 0,
           duration: 1,
-          ease: 'power2.inOut',
+          ease: 'none',
         },
         0
       );
 
-      // 2. Design layer slides in from right with smooth ease
+      // 2. Design layer slides in from right linearly
       tl.to(
         designLayerRef.current,
         {
-          x: '0%',
-          ease: 'power3.inOut',
+          xPercent: 0,
+          ease: 'none',
           duration: 1,
         },
         0
       );
 
-      // 3. Design content appears smoothly
-      tl.from(
-        designContentRef.current,
-        {
-          x: 80,
-          opacity: 0,
-          duration: 0.9,
-          ease: 'power2.out',
-        },
-        0.15
+      // 3. Staggered parallax entries for the about columns
+      tl.fromTo(
+        ".about-left-col",
+        { x: -50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' },
+        0.2
       );
-    }, sectionRef);
 
-    return () => ctx.revert();
+      tl.fromTo(
+        ".about-right-col",
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' },
+        0.3
+      );
+    });
+
+    return () => mm.revert();
   }, []);
 
   const scrollToContent = () => {
-    const scrollAmount = window.innerWidth >= 1024 ? window.innerHeight + 800 : window.innerHeight;
+    const scrollAmount = window.innerWidth >= 1024 ? window.innerHeight + 1100 : window.innerHeight;
     window.scrollTo({ top: scrollAmount, behavior: 'smooth' });
   };
 
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full min-h-screen lg:h-screen overflow-x-hidden lg:overflow-hidden"
     >
       <HeroBackground />
 
       {/* LAYER 1: HERO CONTENT (The Engineer) */}
-      <div className="fixed top-0 left-0 w-full h-full z-[1]">
-        <div
-          ref={heroContentRef}
-          className="relative z-10 h-full flex flex-col"
-        >
+      <div ref={heroContentRef} className="relative lg:absolute top-0 left-0 w-full min-h-screen lg:h-full z-[1] flex flex-col justify-center">
+        <div className="relative z-10 w-full flex flex-col">
           {/* Mobile layout */}
-          <div className="lg:hidden h-full flex flex-col overflow-y-auto">
-            <div className="container-custom flex-1 flex flex-col justify-center pt-32 sm:pt-28 pb-8 px-4">
+          <div className="lg:hidden w-full flex flex-col py-24 px-4">
+            <div className="container-custom flex flex-col justify-center">
               <motion.div
                 initial={{ opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -192,7 +198,7 @@ export const HeroSection = memo(function HeroSection() {
           </div>
 
           {/* Desktop layout */}
-          <div className="relative z-10 hidden lg:flex container-custom min-h-screen flex-col justify-center pt-24 xl:pt-20">
+          <div className="relative z-10 hidden lg:flex container-custom min-h-screen flex-col justify-center pt-24 xl:pt-20 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -263,12 +269,12 @@ export const HeroSection = memo(function HeroSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute bottom-0 right-1/2 translate-x-1/2 lg:right-20 lg:translate-x-0 pointer-events-none z-0"
+                className="flex justify-center lg:justify-end pointer-events-none z-10 w-full"
               >
                 <img
                   src="/assets/hero_image.webp"
                   alt="Ankit Kumar"
-                  className="h-[50vh] xl:h-[60vh] 2xl:h-[70vh] w-auto object-contain select-none"
+                  className="max-h-[45vh] xl:max-h-[55vh] 2xl:max-h-[65vh] w-auto object-contain select-none"
                 />
               </motion.div>
             </div>
@@ -293,10 +299,10 @@ export const HeroSection = memo(function HeroSection() {
         </div>
       </div>
 
-      {/* LAYER 2: ABOUT ME (The Visionary) - Desktop Only */}
+      {/* LAYER 2: ABOUT ME (The Visionary) */}
       <div
         ref={designLayerRef}
-        className="hidden lg:block absolute top-0 left-0 w-full h-full z-[5] translate-x-full will-change-transform bg-background/95 backdrop-blur-xl border-l border-border shadow-2xl"
+        className="relative lg:absolute top-0 left-0 w-full min-h-screen lg:h-full z-[5] will-change-transform bg-background border-t lg:border-t-0 lg:border-l border-border shadow-2xl flex items-center"
       >
         {/* Animated Gradient Blob */}
         <div
@@ -311,26 +317,16 @@ export const HeroSection = memo(function HeroSection() {
 
         <div
           ref={designContentRef}
-          className="absolute top-0 left-0 w-screen h-screen flex items-center px-[6vw] py-20 overflow-y-auto"
+          className="relative lg:absolute lg:top-0 lg:left-0 w-full lg:h-full flex items-center px-4 sm:px-[6vw] py-10 lg:py-20 overflow-y-auto lg:overflow-hidden"
         >
-          <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-16">
+          <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-16 items-center">
             {/* Left Column - Main Content */}
-            <div className="flex flex-col justify-center">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-block mb-6 font-mono text-sm text-primary tracking-[0.15em] uppercase"
-              >
+            <div className="about-left-col flex flex-col justify-center">
+              <div className="inline-block mb-6 font-mono text-sm text-blue-600 dark:text-primary tracking-[0.15em] uppercase">
                 ━━ About Me
-              </motion.div>
+              </div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-[1.1] mb-6 text-foreground tracking-tight"
-              >
+              <h2 className="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-[1.1] mb-6 text-foreground tracking-tight">
                 Crafting Digital <br />
                 <span className="relative inline-block">
                   <span className="font-['Times_New_Roman',serif] italic font-light gradient-text">
@@ -344,14 +340,14 @@ export const HeroSection = memo(function HeroSection() {
                         <stop offset="100%" className="[stop-color:hsl(var(--primary))]" stopOpacity="0.6" />
                       </linearGradient>
                       <filter id="glowUnderline">
-                        <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                        <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
                         <feMerge>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="SourceGraphic"/>
+                          <feMergeNode in="coloredBlur" />
+                          <feMergeNode in="SourceGraphic" />
                         </feMerge>
                       </filter>
                     </defs>
-                    
+
                     {/* Glow layer */}
                     <motion.path
                       d="M0,5 C50,2 80,2 100,5 C120,8 150,8 200,5"
@@ -362,10 +358,11 @@ export const HeroSection = memo(function HeroSection() {
                       opacity="0.3"
                       filter="url(#glowUnderline)"
                       initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 0.3 }}
+                      whileInView={{ pathLength: 1, opacity: 0.3 }}
+                      viewport={{ once: true }}
                       transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     />
-                    
+
                     {/* Main smooth wave */}
                     <motion.path
                       d="M0,5 C50,2 80,2 100,5 C120,8 150,8 200,5"
@@ -374,65 +371,48 @@ export const HeroSection = memo(function HeroSection() {
                       strokeLinecap="round"
                       fill="none"
                       initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
+                      whileInView={{ pathLength: 1 }}
+                      viewport={{ once: true }}
                       transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     />
                   </svg>
                 </span>
                 <br />
                 Through Innovation.
-              </motion.h2>
+              </h2>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-base xl:text-lg text-muted-foreground leading-relaxed mb-8"
-              >
-                A full-stack engineer specializing in building intelligent, scalable systems that merge 
-                cutting-edge technology with intuitive design. From AI-driven solutions to seamless user 
+              <p className="text-base xl:text-lg text-slate-600 dark:text-muted-foreground leading-relaxed mb-8">
+                A full-stack engineer specializing in building intelligent, scalable systems that merge
+                cutting-edge technology with intuitive design. From AI-driven solutions to seamless user
                 experiences, I transform complex challenges into elegant digital products.
-              </motion.p>
+              </p>
 
               {/* Stats Grid */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="grid grid-cols-3 gap-4 mb-8"
-              >
+              <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
-                  { value: '3+', label: 'Years' },
+                  { value: '1+', label: 'Years' },
                   { value: '25+', label: 'Projects' },
                   { value: '40+', label: 'Certificates' },
-                ].map((stat, i) => (
-                  <motion.div
+                ].map((stat) => (
+                  <div
                     key={stat.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6 + i * 0.1 }}
                     className="relative group"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative p-4 rounded-xl border border-border backdrop-blur-sm bg-card/50">
-                      <div className="text-2xl xl:text-3xl font-bold mb-1 text-primary">
+                    <div className="relative p-4 rounded-xl border border-slate-200 dark:border-border backdrop-blur-sm bg-white/70 dark:bg-card/50">
+                      <div className="text-2xl xl:text-3xl font-bold mb-1 text-blue-600 dark:text-primary">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-muted-foreground uppercase tracking-wide">
+                      <div className="text-xs text-slate-500 dark:text-muted-foreground uppercase tracking-wide">
                         {stat.label}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
 
               {/* CTA Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="flex flex-wrap gap-4"
-              >
+              <div className="flex flex-wrap gap-4">
                 <MagneticButton className="btn-primary text-base !px-8 !py-4">
                   <Link to="/projects" className="flex items-center gap-2">
                     Explore My Work
@@ -449,53 +429,20 @@ export const HeroSection = memo(function HeroSection() {
                     </svg>
                   </Link>
                 </MagneticButton>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Right Column - Highlights Grid */}
-            <div className="flex flex-col justify-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="grid grid-cols-1 gap-4"
-              >
-                {[
-                  { icon: '🎯', title: 'Strategic Problem Solver', desc: 'Architecting scalable solutions for complex challenges with precision and foresight' },
-                  { icon: '⚡', title: 'Performance Driven', desc: 'Optimizing every pixel and line of code for maximum speed and efficiency' },
-                  { icon: '🚀', title: 'Innovation First', desc: 'Leveraging cutting-edge technologies for competitive advantage and growth' },
-                  { icon: '🎨', title: 'Design Conscious', desc: 'Balancing aesthetics with functional excellence for delightful experiences' },
-                  { icon: '🔒', title: 'Security Focused', desc: 'Building robust systems with security and privacy at the core' },
-                  { icon: '📊', title: 'Data Informed', desc: 'Making strategic decisions based on analytics and user insights' },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 + i * 0.1 }}
-                    className="flex items-start gap-4 p-5 rounded-xl bg-card/40 backdrop-blur-sm border border-border hover:border-primary/30 hover:bg-card/60 transition-all group"
-                  >
-                    <span className="text-3xl group-hover:scale-110 transition-transform flex-shrink-0">{item.icon}</span>
-                    <div>
-                      <h3 className="text-base font-semibold text-foreground mb-2">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
+            {/* Right Column - Interactive Story Timeline */}
+            <div className="about-right-col flex flex-col justify-center">
+              <InteractiveTimeline />
 
               {/* Bottom Badge */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4 }}
-                className="mt-6 p-4 rounded-xl bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20"
-              >
+              <div className="mt-6 p-4 rounded-xl bg-blue-50/50 dark:bg-gradient-to-r dark:from-primary/10 dark:to-primary/5 border border-blue-200/60 dark:border-primary/20">
                 <div className="flex items-center gap-3 text-sm">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-foreground font-medium">Available for freelance & full-time opportunities</span>
+                  <span className="text-slate-700 dark:text-foreground font-medium">Available for freelance & full-time opportunities</span>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

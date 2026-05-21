@@ -63,7 +63,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
   })
 
   return (
-    <section className="relative z-20 bg-background/95 backdrop-blur-xl border-t border-border/40">
+    <section className="relative z-20 bg-[#eef2ff] dark:bg-background/95 backdrop-blur-xl border-t border-border/40">
       {/* Header */}
       <div className="container-custom pt-14 md:pt-22 lg:pt-30 pb-10">
         <SectionHeader
@@ -86,7 +86,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[10rem] xl:text-[12rem] 2xl:text-[14rem] font-extrabold leading-none text-foreground/20 select-none"
+              className="text-[10rem] xl:text-[12rem] 2xl:text-[14rem] font-extrabold leading-none text-blue-900/10 dark:text-foreground/20 select-none"
             >
               {String(activeIndex + 1).padStart(2, '0')}
             </motion.div>
@@ -112,7 +112,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
                       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#eef2ff]/80 dark:from-background/80 via-transparent to-transparent" />
 
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -145,11 +145,11 @@ export const ProjectsSection = memo(function ProjectsSection() {
 
                   {/* Info */}
                   <div className="space-y-6">
-                    <h3 className="heading-2 text-3xl md:text-4xl lg:text-5xl">
+                    <h3 className="heading-2 text-3xl md:text-4xl lg:text-5xl text-blue-950 dark:text-foreground">
                       {project.title}
                     </h3>
 
-                    <p className="body-large text-muted-foreground max-w-2xl">
+                    <p className="body-large text-slate-600 dark:text-muted-foreground max-w-2xl">
                       {project.description}
                     </p>
 
@@ -157,7 +157,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
                       {project.tags.map(tag => (
                         <span
                           key={tag}
-                          className="px-4 py-2 text-sm font-medium rounded-full bg-secondary/50 text-secondary-foreground border border-border/40"
+                          className="px-4 py-2 text-sm font-medium rounded-full bg-blue-100/60 dark:bg-secondary/50 text-blue-900 dark:text-secondary-foreground border border-blue-200/50 dark:border-border/40"
                         >
                           {tag}
                         </span>

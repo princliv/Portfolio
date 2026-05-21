@@ -1,5 +1,6 @@
 import { Layout } from '@/components/layout/Layout';
 import { SkillsSection } from '@/components/sections/SkillsSection';
+import { useTheme } from '@/hooks/useTheme';
 
 const STAR_COUNT = 24;
 const starPositions = Array.from({ length: STAR_COUNT }, (_, i) => ({
@@ -20,48 +21,60 @@ const shootingStars = Array.from({ length: SHOOTING_STAR_COUNT }, (_, i) => ({
 }));
 
 const Skills = () => {
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === 'dark';
+
   return (
     <Layout>
       {/* Cosmic universe animated background — full page */}
       <div className="relative min-h-screen overflow-hidden">
-        {/* Base gradient: deep space */}
+        {/* Base gradient: deep space in dark mode, soft gradient in light mode */}
         <div
-          className="fixed inset-0 -z-10"
+          className="fixed inset-0 -z-10 transition-colors duration-500"
           style={{
-            background:
-              'linear-gradient(180deg, hsl(240 30% 6%) 0%, hsl(250 40% 8%) 30%, hsl(260 50% 6%) 60%, hsl(240 35% 4%) 100%)',
+            background: isDarkMode
+              ? 'linear-gradient(180deg, hsl(240 30% 6%) 0%, hsl(250 40% 8%) 30%, hsl(260 50% 6%) 60%, hsl(240 35% 4%) 100%)'
+              : 'linear-gradient(180deg, #ffffff 0%, #f5f5f7 40%, #eef2ff 100%)',
           }}
         />
         {/* Animated nebula orbs */}
         <div
-          className="fixed -left-40 -top-40 h-[500px] w-[500px] rounded-full opacity-40 -z-10 animate-nebula-pulse"
+          className="fixed -left-40 -top-40 h-[500px] w-[500px] rounded-full opacity-40 -z-10 animate-nebula-pulse transition-all duration-500"
           style={{
-            background: 'radial-gradient(circle, hsl(192 91% 50% / 0.35), transparent 65%)',
+            background: isDarkMode
+              ? 'radial-gradient(circle, hsl(192 91% 50% / 0.35), transparent 65%)'
+              : 'radial-gradient(circle, hsl(192 91% 50% / 0.15), transparent 65%)',
             filter: 'blur(60px)',
           }}
         />
         <div
-          className="fixed bottom-0 right-0 h-[450px] w-[450px] translate-x-1/4 translate-y-1/4 rounded-full opacity-30 -z-10 animate-nebula-pulse"
+          className="fixed bottom-0 right-0 h-[450px] w-[450px] translate-x-1/4 translate-y-1/4 rounded-full opacity-30 -z-10 animate-nebula-pulse transition-all duration-500"
           style={{
             animationDelay: '2s',
-            background: 'radial-gradient(circle, hsl(280 87% 65% / 0.4), transparent 65%)',
+            background: isDarkMode
+              ? 'radial-gradient(circle, hsl(280 87% 65% / 0.4), transparent 65%)'
+              : 'radial-gradient(circle, hsl(280 87% 65% / 0.15), transparent 65%)',
             filter: 'blur(70px)',
           }}
         />
         <div
-          className="fixed left-1/2 top-1/3 h-[400px] w-[400px] -translate-x-1/2 rounded-full opacity-20 -z-10 animate-cosmic-float"
+          className="fixed left-1/2 top-1/3 h-[400px] w-[400px] -translate-x-1/2 rounded-full opacity-20 -z-10 animate-cosmic-float transition-all duration-500"
           style={{
             animationDelay: '1s',
-            background: 'radial-gradient(circle, hsl(192 91% 50% / 0.25), transparent 60%)',
+            background: isDarkMode
+              ? 'radial-gradient(circle, hsl(192 91% 50% / 0.25), transparent 60%)'
+              : 'radial-gradient(circle, hsl(192 91% 50% / 0.1), transparent 60%)',
             filter: 'blur(80px)',
           }}
         />
-        {/* Starfield: subtle twinkling dots (reduced) */}
+        {/* Starfield: subtle twinkling dots */}
         <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>
           {starPositions.map((star) => (
             <div
               key={star.id}
-              className="absolute w-1 h-1 rounded-full bg-white animate-constellation-twinkle"
+              className={`absolute w-1 h-1 rounded-full animate-constellation-twinkle transition-all duration-500 ${
+                isDarkMode ? 'bg-white' : 'bg-violet-400/60'
+              }`}
               style={{
                 left: `${star.left}%`,
                 top: `${star.top}%`,
@@ -74,7 +87,9 @@ const Skills = () => {
           {shootingStars.map((s) => (
             <div
               key={s.id}
-              className="absolute w-1 h-1 rounded-full bg-white animate-shooting-star"
+              className={`absolute w-1 h-1 rounded-full animate-shooting-star transition-all duration-500 ${
+                isDarkMode ? 'bg-white' : 'bg-primary/70'
+              }`}
               style={{
                 left: `${s.left}%`,
                 top: `${s.top}%`,

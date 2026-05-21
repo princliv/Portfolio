@@ -22,14 +22,14 @@ export function SectionHeader({ eyebrow, title, description, centered = true }: 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="inline-block text-sm font-medium text-primary uppercase tracking-widest mb-4"
+          className="inline-block text-sm font-medium text-blue-600 dark:text-primary uppercase tracking-widest mb-4"
         >
           {eyebrow}
         </motion.span>
       )}
-      <h2 className="heading-2 text-balance mb-4">{title}</h2>
+      <h2 className="heading-2 text-balance mb-4 text-slate-900 dark:text-foreground">{title}</h2>
       {description && (
-        <p className={`body-large text-muted-foreground ${centered ? 'max-w-2xl mx-auto' : 'max-w-2xl'}`}>
+        <p className={`body-large text-slate-600 dark:text-muted-foreground ${centered ? 'max-w-2xl mx-auto' : 'max-w-2xl'}`}>
           {description}
         </p>
       )}
