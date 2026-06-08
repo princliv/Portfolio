@@ -278,7 +278,7 @@ export function GitHubSection() {
   const totalLang = languages.reduce((s, l) => s + l.count, 0);
 
   return (
-    <section id="github" className="scroll-snap-section relative z-20 bg-[#f5f5f7] dark:bg-background overflow-hidden border-t border-slate-200 dark:border-border/50">
+    <section id="github" className="relative z-20 bg-[#f5f5f7] dark:bg-background overflow-hidden border-t border-slate-200 dark:border-border/50">
       {/* Hero */}
       <div className="relative min-h-[85vh] lg:min-h-[90vh] flex flex-col lg:flex-row">
         <motion.div

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export const ContactSection = memo(function ContactSection() {
   return (
-    <section className="scroll-snap-section relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 bg-[#eef2ff] dark:bg-background/95 border-t border-slate-200/80 dark:border-border/40 shadow-2xl">
+    <section className="relative z-20 pt-20 md:pt-12 lg:pt-20 pb-20 md:pb-12 lg:pb-20 bg-[#eef2ff] dark:bg-background/95 border-t border-slate-200/80 dark:border-border/40 shadow-2xl">
       <div className="container-custom">
         <div
           className="relative overflow-hidden rounded-3xl p-12 md:p-16 lg:p-20 text-center border border-slate-200/50 dark:border-white/5 bg-white/60 dark:bg-[#0b0b0e]/30 backdrop-blur-xl"

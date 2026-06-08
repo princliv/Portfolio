@@ -23,7 +23,7 @@ export const HeroSection = memo(function HeroSection() {
   return (
     <section
       id="hero-top-section"
-      className="scroll-snap-section relative w-full h-screen flex flex-col justify-center overflow-hidden"
+      className="relative w-full h-screen flex flex-col justify-center overflow-hidden"
     >
       <HeroBackground />
 

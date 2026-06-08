@@ -63,7 +63,7 @@ export const ProjectsSection = memo(function ProjectsSection() {
   })
 
   return (
-    <section className="scroll-snap-section relative z-20 bg-[#eef2ff] dark:bg-background/95 backdrop-blur-xl border-t border-border/40">
+    <section className="relative z-20 bg-[#eef2ff] dark:bg-background/95 backdrop-blur-xl border-t border-border/40">
       {/* Header */}
       <div className="container-custom pt-14 md:pt-22 lg:pt-30 pb-10">
         <SectionHeader

@@ -405,24 +405,6 @@
   }
 }
 
-/* Home Page Scroll Snap System */
-.home-scroll-snap {
+html {
   scroll-behavior: smooth;
-}
-
-@media (min-width: 768px) {
-  .home-scroll-snap {
-    scroll-snap-type: y mandatory;
-  }
-}
-
-@media (max-width: 767px) {
-  .home-scroll-snap {
-    scroll-snap-type: y proximity;
-  }
-}
-
-.scroll-snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
