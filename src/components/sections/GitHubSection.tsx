@@ -108,45 +108,59 @@ function RepoCard({ repo, index }: { repo: Repository; index: number }) {
       variants={fadeInUp}
       custom={index}
       whileHover={{ scale: 1.02, y: -6, transition: { duration: 0.25 } }}
-      className="group relative overflow-hidden rounded-2xl bg-white/70 dark:bg-gradient-to-br dark:from-slate-900/50 dark:to-slate-800/30 backdrop-blur-xl border border-slate-200 dark:border-border p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300"
+      className="group relative overflow-hidden rounded-2xl bg-white/80 dark:bg-card animated-border border border-slate-200/80 dark:border-border/60 p-6 shadow-md dark:shadow-[0_4px_24px_-8px_hsla(0,0%,0%,0.4)] hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-[0_12px_48px_-12px_hsla(192,91%,50%,0.2)] transition-all duration-500"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Ambient depth gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] via-transparent to-purple-500/[0.05] dark:from-primary/[0.07] dark:via-transparent dark:to-purple-500/[0.06] pointer-events-none" />
+      {/* Hover glow wash */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-purple-500/0 group-hover:from-primary/[0.08] group-hover:to-purple-500/[0.05] transition-all duration-500 pointer-events-none" />
+      {/* Top highlight */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
+
       <div className="relative z-10">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <h4 className="text-lg font-semibold text-slate-800 dark:text-foreground group-hover:text-primary transition-colors truncate">
+        <div className="flex items-start justify-between gap-4 mb-4">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="shrink-0 p-2.5 rounded-xl bg-primary/10 dark:bg-primary/15 border border-primary/20 group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-sm group-hover:shadow-[0_0_20px_-4px_hsla(192,91%,50%,0.5)]">
+              <Github className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-mono uppercase tracking-[0.18em] text-slate-400 dark:text-muted-foreground/60 mb-0.5">
+                repo.{String(index + 1).padStart(2, '0')}
+              </p>
+              <h4 className="text-lg font-semibold font-['Space_Grotesk'] tracking-tight text-slate-900 dark:text-foreground group-hover:text-primary transition-colors duration-300 truncate">
                 {repo.name}
               </h4>
-            </div>
-            <p className="text-sm text-slate-600 dark:text-muted-foreground mb-4 line-clamp-2">
-              {repo.description || 'No description available'}
-            </p>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-muted-foreground">
-              <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 dark:bg-muted border border-slate-200 dark:border-border">
-                <GitCommit className="w-3 h-3 text-emerald-500" />
-                {repo.commit_count ?? 0} commits
-              </span>
-              <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 dark:bg-muted">
-                <Star className="w-3 h-3 text-amber-500" />
-                {repo.stargazers_count}
-              </span>
-              <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 dark:bg-muted">
-                <Code2 className="w-3 h-3 text-primary" />
-                {repo.language || 'Unknown'}
-              </span>
             </div>
           </div>
           <a
             href={repo.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 p-2.5 rounded-xl bg-slate-100 dark:bg-muted hover:bg-slate-200 dark:hover:bg-muted/80 transition-colors group-hover:bg-primary/15 border border-transparent group-hover:border-primary/20"
+            className="shrink-0 p-2.5 rounded-xl bg-slate-100/80 dark:bg-white/[0.04] backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/[0.08] transition-all duration-300 group-hover:bg-primary/15 dark:group-hover:bg-primary/20 border border-slate-200/80 dark:border-white/[0.08] group-hover:border-primary/30 group-hover:shadow-[0_0_16px_-4px_hsla(192,91%,50%,0.4)]"
             aria-label={`Open ${repo.name} on GitHub`}
           >
-            <ExternalLink className="w-4 h-4 text-slate-500 dark:text-muted-foreground group-hover:text-primary transition-colors" />
+            <ExternalLink className="w-4 h-4 text-slate-500 dark:text-muted-foreground group-hover:text-primary transition-colors duration-300" />
           </a>
+        </div>
+
+        <p className="text-sm text-slate-650 dark:text-muted-foreground mb-5 line-clamp-2 leading-relaxed">
+          {repo.description || 'No description available'}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-muted-foreground">
+          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100/80 dark:bg-white/[0.04] backdrop-blur-sm border border-slate-200/70 dark:border-white/[0.07]">
+            <GitCommit className="w-3 h-3 text-emerald-500" />
+            <span className="font-medium text-slate-700 dark:text-foreground/80">{repo.commit_count ?? 0}</span>
+            <span className="text-slate-400 dark:text-muted-foreground/70">commits</span>
+          </span>
+          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100/80 dark:bg-white/[0.04] backdrop-blur-sm border border-slate-200/70 dark:border-white/[0.07]">
+            <Star className="w-3 h-3 text-amber-500" />
+            <span className="font-medium text-slate-700 dark:text-foreground/80">{repo.stargazers_count}</span>
+          </span>
+          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100/80 dark:bg-white/[0.04] backdrop-blur-sm border border-slate-200/70 dark:border-white/[0.07]">
+            <Code2 className="w-3 h-3 text-primary" />
+            <span className="font-medium text-slate-700 dark:text-foreground/80">{repo.language || 'Unknown'}</span>
+          </span>
         </div>
       </div>
     </motion.article>
@@ -264,7 +278,7 @@ export function GitHubSection() {
   const totalLang = languages.reduce((s, l) => s + l.count, 0);
 
   return (
-    <section id="github" className="relative z-20 bg-[#f5f5f7] dark:bg-background overflow-hidden border-t border-slate-200 dark:border-border/50">
+    <section id="github" className="scroll-snap-section relative z-20 bg-[#f5f5f7] dark:bg-background overflow-hidden border-t border-slate-200 dark:border-border/50">
       {/* Hero */}
       <div className="relative min-h-[85vh] lg:min-h-[90vh] flex flex-col lg:flex-row">
         <motion.div
@@ -308,7 +322,7 @@ export function GitHubSection() {
             <span className="text-primary">Code, commits, craft.</span>
           </motion.h2>
           <motion.p
-            className="text-lg text-slate-600 dark:text-muted-foreground max-w-md mb-10"
+            className="text-lg text-slate-605 dark:text-muted-foreground max-w-md mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
@@ -393,7 +407,7 @@ export function GitHubSection() {
                 const pct = totalLang > 0 ? (lang.count / totalLang) * 100 : 0;
                 return (
                   <motion.div key={lang.name} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={viewport} transition={{ duration: 0.5, delay: i * 0.06 }} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-muted/80 border border-slate-200 dark:border-border">
-                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: lang.color }} />
+                    <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: lang.color }} />
                     <span className="text-sm font-medium text-slate-800 dark:text-foreground">{lang.name}</span>
                     <span className="text-xs text-slate-500 dark:text-muted-foreground tabular-nums">{pct.toFixed(0)}%</span>
                   </motion.div>
@@ -421,7 +435,7 @@ export function GitHubSection() {
       <motion.section className="container-custom pb-24 md:pb-32" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
         <motion.div className="mb-12" variants={fadeInUp}>
           <h3 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-foreground">Top repositories</h3>
-          <p className="text-slate-500 dark:text-muted-foreground mt-1">Most starred and forked projects</p>
+          <p className="text-slate-550 dark:text-muted-foreground mt-1">Most starred and forked projects</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

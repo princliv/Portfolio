@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -66,6 +66,7 @@
     --contrib-2: #40c463;
     --contrib-3: #30a14e;
     --contrib-4: #216e39;
+    --cell-outline: rgba(27, 31, 35, 0.06);
   }
 
   .dark {
@@ -124,6 +125,7 @@
     --contrib-2: #006d32;
     --contrib-3: #26a641;
     --contrib-4: #39d353;
+    --cell-outline: rgba(255, 255, 255, 0.05);
   }
 }
 
@@ -401,4 +403,26 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Home Page Scroll Snap System */
+.home-scroll-snap {
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+  .home-scroll-snap {
+    scroll-snap-type: y mandatory;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-scroll-snap {
+    scroll-snap-type: y proximity;
+  }
+}
+
+.scroll-snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }

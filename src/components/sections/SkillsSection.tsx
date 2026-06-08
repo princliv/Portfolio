@@ -1,33 +1,9 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useState } from 'react';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import Cybersecurity from '../../../public/assets/icons/cybersecutrity.webp';
 import Canva from '../../../public/assets/icons/Canva.png';
 import Anaconda from '../../../public/assets/icons/Anaconda.png';
 
-const viewportConfig = { once: false, amount: 0.25 } as const;
-const cinematic = [0.16, 1, 0.3, 1];
-
-/* ------------------ SCROLL DIRECTION ------------------ */
-function useScrollDirection() {
-  const lastY = useRef(0);
-  const [direction, setDirection] = useState<'up' | 'down'>('down');
-
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (y > lastY.current) setDirection('down');
-      else if (y < lastY.current) setDirection('up');
-      lastY.current = y;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  return direction;
-}
-
-/* ------------------ DATA ------------------ */
 const SKILLS = [
   {
     title: 'Programming',
@@ -108,36 +84,8 @@ const SKILLS = [
   },
 ];
 
-/* ------------------ MAGNETIC TILT ------------------ */
-function useMagneticTilt(active = true) {
-  const [style, setStyle] = useState<Record<string, string>>({});
-
-  const onMove = useCallback(
-    (e: React.MouseEvent<HTMLLIElement>) => {
-      if (!active) return;
-      const el = e.currentTarget;
-      const rect = el.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      setStyle({
-        transform: `perspective(800px) rotateX(${-y * 8}deg) rotateY(${x * 10}deg) translate3d(${x * 6}px, ${y * 6}px, 0)`,
-      });
-    },
-    [active]
-  );
-
-  const onLeave = () =>
-    setStyle({
-      transform: 'perspective(800px) rotateX(0) rotateY(0) translate3d(0,0,0)',
-    });
-
-  return { style, onMove, onLeave };
-}
-
 /* ------------------ MAIN ------------------ */
 export const SkillsSection: React.FC<{ variant?: 'default' | 'page' }> = ({ variant = 'default' }) => {
-  const prefersReduced = useReducedMotion();
-
   return (
     <section
       className={`relative z-20 py-28 overflow-hidden ${variant === 'page' ? 'bg-transparent' : 'bg-background'}`}
@@ -151,10 +99,9 @@ export const SkillsSection: React.FC<{ variant?: 'default' | 'page' }> = ({ vari
 
         <div className="mt-20 space-y-28">
           {SKILLS.map((group) => (
-            <AnimatedGroup
+            <SkillGroup
               key={group.title}
               group={group}
-              prefersReduced={prefersReduced}
             />
           ))}
         </div>
@@ -163,25 +110,14 @@ export const SkillsSection: React.FC<{ variant?: 'default' | 'page' }> = ({ vari
   );
 };
 
-/* ------------------ GROUP (PER SECTION ANIMATION) ------------------ */
-function AnimatedGroup({
+/* ------------------ GROUP (PER SECTION) ------------------ */
+function SkillGroup({
   group,
-  prefersReduced,
 }: {
   group: (typeof SKILLS)[0];
-  prefersReduced: boolean;
 }) {
-  const direction = useScrollDirection();
-  const initialX = prefersReduced ? 0 : direction === 'down' ? 140 : -140;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, x: initialX }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={viewportConfig}
-      transition={{ duration: 0.9, ease: cinematic }}
-      className="grid grid-cols-12 gap-6 items-start"
-    >
+    <div className="grid grid-cols-12 gap-6 items-start">
       <div className="col-span-12 lg:col-span-4">
         <aside className="sticky top-28">
           <h3 className="text-4xl md:text-5xl font-semibold">{group.title}</h3>
@@ -194,39 +130,30 @@ function AnimatedGroup({
           <SkillPill
             key={item.name}
             item={item}
-            prefersReduced={prefersReduced}
             index={i}
           />
         ))}
       </ul>
-    </motion.div>
+    </div>
   );
 }
 
 /* ------------------ SKILL PILL ------------------ */
 function SkillPill({
   item,
-  prefersReduced,
   index,
 }: {
   item: { name: string; icon: string | { src: string } };
-  prefersReduced: boolean;
   index: number;
 }) {
-  const { style, onMove, onLeave } = useMagneticTilt(!prefersReduced);
   const [hovered, setHovered] = useState(false);
 
   return (
-    <motion.li
-      style={style}
-      onMouseMove={onMove}
-      onMouseLeave={() => {
-        onLeave();
-        setHovered(false);
-      }}
+    <li
+      onMouseLeave={() => setHovered(false)}
       onMouseEnter={() => setHovered(true)}
       tabIndex={0}
-      className={`relative min-w-[180px] md:min-w-[220px] flex items-center gap-3 rounded-2xl px-4 py-3 bg-card/60 border backdrop-blur-md transition-all duration-300 ${
+      className={`relative min-w-[180px] md:min-w-[220px] flex items-center gap-3 rounded-2xl px-4 py-3 bg-card/60 border backdrop-blur-md transition-all duration-300 hover:scale-[1.02] cursor-pointer ${
         hovered ? 'border-primary shadow-lg shadow-primary/10' : 'border-border shadow-sm'
       }`}
     >
@@ -239,14 +166,14 @@ function SkillPill({
       </div>
 
       <div>
-        <span className={`font-medium ${hovered ? 'text-primary' : ''}`}>
+        <span className={`font-medium transition-colors duration-300 ${hovered ? 'text-primary' : ''}`}>
           {item.name}
         </span>
         <div className="text-xs text-muted-foreground">
           {index % 2 === 0 ? 'Proficient' : 'Working Experience'}
         </div>
       </div>
-    </motion.li>
+    </li>
   );
 }
 
