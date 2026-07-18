@@ -2,8 +2,8 @@ import { memo, useRef, useState } from 'react'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Github, ExternalLink } from 'lucide-react'
-import udyampath from '../../../public/assets/about-marquee/1.png'
-import mentora from '../../../public/assets/about-marquee/13.png'
+import udyampath from '../../../public/assets/about-marquee/1.webp'
+import mentora from '../../../public/assets/about-marquee/13.webp'
 
 const featuredProjects = [
   {
@@ -53,17 +53,17 @@ export const ProjectsSection = memo(function ProjectsSection() {
     offset: ['start start', 'end end'],
   })
 
-  // ✅ Convert scroll progress → index (smooth & stable)
+  // Convert scroll progress → index (smooth & stable), only re-render on actual change
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     const index = Math.min(
       featuredProjects.length - 1,
       Math.floor(latest * featuredProjects.length)
     )
-    setActiveIndex(index)
+    setActiveIndex((prev) => (prev === index ? prev : index))
   })
 
   return (
-    <section className="relative z-20 bg-[#eef2ff] dark:bg-background/95 backdrop-blur-xl border-t border-border/40">
+    <section id="projects-section" className="relative z-20 bg-[#eef2ff] dark:bg-background/95 backdrop-blur-xl border-t border-border/40">
       {/* Header */}
       <div className="container-custom pt-14 md:pt-22 lg:pt-30 pb-10">
         <SectionHeader
@@ -107,6 +107,10 @@ export const ProjectsSection = memo(function ProjectsSection() {
                     <motion.img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      width={1200}
+                      height={675}
                       className="w-full h-[40vh] md:h-[50vh] object-cover"
                       whileHover={{ scale: 1.04 }}
                       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

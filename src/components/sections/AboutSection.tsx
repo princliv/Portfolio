@@ -249,7 +249,7 @@ export const AboutSection = memo(function AboutSection() {
   return (
     <section
       id="skills-section"
-      className="relative z-20 pt-24 pb-24 rounded-t-[3rem] md:rounded-t-[4rem] lg:rounded-t-[5rem] bg-[#f5f5f7] dark:bg-background/95 backdrop-blur-xl border-t border-border/40 shadow-2xl overflow-hidden"
+      className="relative z-20 pt-24 pb-24 rounded-t-[3rem] md:rounded-t-[4rem] lg:rounded-t-[5rem] bg-[#f5f5f7] dark:bg-background border-t border-border/40 shadow-2xl overflow-hidden"
       style={{ marginTop: '5vh' }}
     >
       {/* Visual background overlays */}

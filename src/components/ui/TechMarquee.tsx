@@ -3,22 +3,22 @@ import { motion } from 'framer-motion';
 /* ---------------- IMAGE ARRAY ---------------- */
 
 const marqueeImages = [
-  '/assets/about-marquee/1.png',
-  '/assets/about-marquee/2.png',
-  '/assets/about-marquee/3.png',
-  '/assets/about-marquee/4.jpeg',
-  '/assets/about-marquee/5.jpeg',
-  '/assets/about-marquee/6.jpeg',
-  '/assets/about-marquee/7.png',
-  '/assets/about-marquee/8.png',
-  '/assets/about-marquee/9.png',
-  '/assets/about-marquee/10.png',
-  '/assets/about-marquee/11.png',
-  '/assets/about-marquee/12.png',
-  '/assets/about-marquee/13.png',
-  '/assets/about-marquee/14.jpeg',
-  '/assets/about-marquee/15.jpeg',
-  '/assets/about-marquee/34.png',
+  '/assets/about-marquee/1.webp',
+  '/assets/about-marquee/2.webp',
+  '/assets/about-marquee/3.webp',
+  '/assets/about-marquee/4.webp',
+  '/assets/about-marquee/5.webp',
+  '/assets/about-marquee/6.webp',
+  '/assets/about-marquee/7.webp',
+  '/assets/about-marquee/8.webp',
+  '/assets/about-marquee/9.webp',
+  '/assets/about-marquee/10.webp',
+  '/assets/about-marquee/11.webp',
+  '/assets/about-marquee/12.webp',
+  '/assets/about-marquee/13.webp',
+  '/assets/about-marquee/14.webp',
+  '/assets/about-marquee/15.webp',
+  '/assets/about-marquee/34.webp',
 ];
 
 const MARQUEE_HEIGHT = 280;

@@ -1,29 +1,15 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { Navigation } from './Navigation';
 import { Footer } from './Footer';
 import { CustomCursor } from '@/components/ui/CustomCursor';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
-  useEffect(() => {
-    // Add parallax effect on scroll
-    const handleScroll = () => {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('[data-parallax]');
-      
-      parallaxElements.forEach((element) => {
-        const speed = parseFloat(element.getAttribute('data-speed') || '0.5');
-        const yPos = -(scrolled * speed);
-        (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useSmoothScroll();
 
   return (
     <div className="min-h-screen flex flex-col relative">

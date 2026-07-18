@@ -181,12 +181,44 @@ function Constellation() {
 
 export function HeroBackground() {
   const [shootingStars] = useState(() => Array.from({ length: 8 }, (_, i) => i));
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let inViewport = true;
+    let tabVisible = !document.hidden;
+    const updateActive = () => setIsActive(inViewport && tabVisible);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inViewport = entry.isIntersecting;
+        updateActive();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(container);
+
+    const handleVisibilityChange = () => {
+      tabVisible = !document.hidden;
+      updateActive();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden">
+    <div ref={containerRef} className="absolute inset-0 -z-10 overflow-hidden">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
         dpr={[1, 2]}
+        frameloop={isActive ? 'always' : 'never'}
         style={{ background: 'transparent' }}
       >
         <ParticleField />
