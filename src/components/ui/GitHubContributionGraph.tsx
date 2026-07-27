@@ -19,6 +19,14 @@ const WEEK_WIDTH = SQUARE_SIZE + SQUARE_GAP;
 
 /** Contribution colors use CSS variables --contrib-0 to --contrib-4 (light/dark in index.css) */
 
+/** Format as YYYY-MM-DD in local time (avoid UTC shift from toISOString). */
+function toLocalDateString(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 function processContributionData(contributions: { date: string; contributionCount: number }[], year: number): ContributionData {
   const weeks: ContributionDay[][] = [];
   const startDate = new Date(year, 0, 1);
@@ -33,7 +41,7 @@ function processContributionData(contributions: { date: string; contributionCoun
   let currentWeek: ContributionDay[] = [];
 
   while (currentDate <= endDate) {
-    const dateStr = currentDate.toISOString().split('T')[0];
+    const dateStr = toLocalDateString(currentDate);
     const c = contributions.find((x) => x.date === dateStr);
     const count = c?.contributionCount ?? 0;
     totalContributions += count;
@@ -47,7 +55,7 @@ function processContributionData(contributions: { date: string; contributionCoun
   if (currentWeek.length > 0) {
     while (currentWeek.length < 7) {
       currentWeek.push({
-        date: currentDate.toISOString().split('T')[0],
+        date: toLocalDateString(currentDate),
         count: 0,
       });
       currentDate.setDate(currentDate.getDate() + 1);
@@ -64,7 +72,7 @@ function generateMockContributionData(year: number): ContributionData {
   const end = new Date(year, 11, 31);
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     contributions.push({
-      date: d.toISOString().split('T')[0],
+      date: toLocalDateString(new Date(d)),
       contributionCount: Math.floor(Math.random() * 15),
     });
   }
