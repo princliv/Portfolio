@@ -68,7 +68,18 @@ const Experience = () => {
                         </div>
                         <div className={isLeft ? 'md:text-left' : ''}>
                           <h3 className="heading-4 text-xl">{exp.role}</h3>
-                          <p className="text-primary font-medium">{exp.company}</p>
+                          {'url' in exp && exp.url ? (
+                            <a
+                              href={exp.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary font-medium hover:underline"
+                            >
+                              {exp.company}
+                            </a>
+                          ) : (
+                            <p className="text-primary font-medium">{exp.company}</p>
+                          )}
                         </div>
                       </div>
 

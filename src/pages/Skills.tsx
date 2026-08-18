@@ -37,26 +37,7 @@ const Skills = () => {
               : 'linear-gradient(180deg, #ffffff 0%, #f5f5f7 40%, #eef2ff 100%)',
           }}
         />
-        {/* Animated nebula orbs */}
-        <div
-          className="fixed -left-40 -top-40 h-[500px] w-[500px] rounded-full opacity-40 -z-10 animate-nebula-pulse transition-all duration-500"
-          style={{
-            background: isDarkMode
-              ? 'radial-gradient(circle, hsl(192 91% 50% / 0.35), transparent 65%)'
-              : 'radial-gradient(circle, hsl(192 91% 50% / 0.15), transparent 65%)',
-            filter: 'blur(60px)',
-          }}
-        />
-        <div
-          className="fixed bottom-0 right-0 h-[450px] w-[450px] translate-x-1/4 translate-y-1/4 rounded-full opacity-30 -z-10 animate-nebula-pulse transition-all duration-500"
-          style={{
-            animationDelay: '2s',
-            background: isDarkMode
-              ? 'radial-gradient(circle, hsl(280 87% 65% / 0.4), transparent 65%)'
-              : 'radial-gradient(circle, hsl(280 87% 65% / 0.15), transparent 65%)',
-            filter: 'blur(70px)',
-          }}
-        />
+        {/* Animated nebula orb */}
         <div
           className="fixed left-1/2 top-1/3 h-[400px] w-[400px] -translate-x-1/2 rounded-full opacity-20 -z-10 animate-cosmic-float transition-all duration-500"
           style={{
